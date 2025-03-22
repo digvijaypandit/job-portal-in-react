@@ -53,7 +53,7 @@ const Hero = () => {
         transition={{ duration: 1, ease: "easeOut" }}
       >
         {/* Title with Typewriter Effect */}
-        <h1 className="text-5xl font-bold select-none">
+        <h1 className="text-5xl font-bold cursor-context-menu select-none">
           <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent select-text">
             <Typewriter
               words={[

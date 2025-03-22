@@ -2,9 +2,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 const members = [
-  { name: "John Doe", role: "Frontend Developer", img: "" },
-  { name: "John Doe", role: "Frontend Developer", img: "" },
-  { name: "John Doe", role: "Frontend Developer", img: "" },
+  { name: "Jishan Shaikh", role: "Backend Developer", img: "/" },
+  { name: "Digvijay Pandit", role: "Full-Stack Developer", img: "/images/Digvijay.jpg" },
+  { name: "Gaurav Pawar", role: "Frontend Developer", img: "/images/Gaurav.jpg" },
 ];
 
 const Team = () => {
