@@ -25,11 +25,11 @@ const LoginPage = () => {
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-black text-white overflow-hidden px-4">
-      {/* Animated Background - Moves from Left to Right */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-purple-900 via-black to-blue-900"
-        animate={{ backgroundPositionX: ["-100%", "100%"] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+       {/* Animated Background */}
+       <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900"
+        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
       ></motion.div>
 
       {/* Responsive Glassmorphic Container */}
@@ -88,7 +88,7 @@ const LoginPage = () => {
           <img
             src="/images/Login_animation.gif"
             alt="Login Animation"
-            className="w-full h-auto select-none object-cover"
+            className="w-full h-full select-none object-cover"
           />
         </motion.div>
 
