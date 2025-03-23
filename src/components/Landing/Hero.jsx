@@ -15,7 +15,7 @@ const Hero = () => {
 
   return (
     <div className="relative h-screen select-none flex items-center justify-center bg-black text-white overflow-hidden">
-      {/* Navigation Buttons (Styled with Typewriter Colors) */}
+      {/* Login & Signup Buttons (Top Right) */}
       <div className="absolute z-10 top-6 right-6 flex gap-4">
         <motion.button
           onClick={() => navigate("/login")}
