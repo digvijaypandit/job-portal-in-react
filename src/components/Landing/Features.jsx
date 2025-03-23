@@ -16,7 +16,7 @@ const Features = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        🚀 How We Help You
+        How We Help You
       </motion.h2>
 
       <div className="flex flex-wrap justify-center gap-12">
