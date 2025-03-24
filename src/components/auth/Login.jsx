@@ -11,22 +11,28 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("applicant"); // Default role
 
   const handleLogin = async () => {
     try {
       const result = await dispatch(loginUser({ email, password })).unwrap();
       console.log("Login Success:", result);
-      navigate("/dashboard");
+
+      // Navigate based on role selection
+      if (role === "applicant") {
+        navigate("/applicant/home");
+      } else {
+        navigate("/employer/home");
+      }
     } catch (error) {
-      console.error("Login failed:", error); // Show actual error
+      console.error("Login failed:", error);
     }
   };
-  
 
   return (
     <div className="relative h-screen flex items-center justify-center bg-black text-white overflow-hidden px-4">
-       {/* Animated Background */}
-       <motion.div
+      {/* Animated Background */}
+      <motion.div
         className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900"
         animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
@@ -49,6 +55,17 @@ const LoginPage = () => {
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Sign In</h2>
           <p className="text-gray-300 mb-6">Enter your credentials below.</p>
 
+          {/* Role Selection Dropdown */}
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full p-3 mb-4 bg-white/20 text-white rounded-lg outline-none border border-transparent focus:border-purple-400 cursor-pointer"
+          >
+            <option value="applicant" className="text-black">Applicant</option>
+            <option value="employer" className="text-black">Employer</option>
+          </select>
+
+          {/* Login Inputs */}
           <input
             type="email"
             placeholder="Email"
@@ -63,6 +80,8 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-3 mb-4 bg-white/20 text-white rounded-lg outline-none border border-transparent focus:border-purple-400"
           />
+
+          {/* Login Button */}
           <motion.button
             className="w-full p-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-lg mt-4 shadow-lg"
             whileHover={{ scale: 1.05, boxShadow: "0px 0px 20px rgba(128, 0, 128, 0.7)" }}
@@ -72,6 +91,7 @@ const LoginPage = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </motion.button>
+
           {error && <p className="text-red-400 mt-2">{error}</p>}
           <p className="text-sm text-gray-400 mt-3 cursor-pointer hover:text-white transition">
             Forgot password?

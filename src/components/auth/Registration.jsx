@@ -11,7 +11,7 @@ const RegistrationPage = () => {
 
   // Determine user type from URL
   const isEmployer = location.pathname.includes("employer");
-  const userType = isEmployer ? "Employer" : "Employee";
+  const userType = isEmployer ? "Employer" : "Applicant";
 
   // Form State
   const [formData, setFormData] = useState({
