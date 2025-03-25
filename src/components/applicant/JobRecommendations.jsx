@@ -25,7 +25,7 @@ const JobCard = ({ job, gradient }) => {
         <p>{job.applied} Applied</p>
         <p>{job.time_left}</p>
       </div>
-      </div>
+    </div>
   );
 };
 
@@ -54,37 +54,41 @@ const JobRecommendations = ({ jobs = [] }) => {
   };
 
   return (
-    <div className="relative flex items-center justify-center py-6">
-      {/* Left Scroll Button */}
-      <button
-        onClick={scrollLeft}
-        className="absolute left-0 z-10 p-2 bg-white shadow-md rounded-full hover:bg-gray-200 transition-all"
-      >
-        <IoIosArrowDropleft size={28} />
-      </button>
+    <div>
+      <h3 className='text-2xl font-medium'>Recommendations</h3>
+      <p>Latest job's for you</p>
+      <div className="relative flex items-center justify-center py-6">
+        {/* Left Scroll Button */}
+        <button
+          onClick={scrollLeft}
+          className="absolute -left-5 z-10 p-2 cursor-pointer bg-white shadow-md rounded-full hover:bg-gray-200 transition-all"
+        >
+          <IoIosArrowDropleft size={28} />
+        </button>
 
-      {/* Scrollable Container */}
-      <div
-        ref={containerRef}
-        className="flex overflow-x-auto space-x-4 px-6 h-auto scrollbar-hide scroll-smooth flex-nowrap"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {jobs.length > 0 ? (
-          jobs.map((job, index) => (
-            <JobCard key={index} job={job} gradient={gradients[index % gradients.length]} />
-          ))
-        ) : (
-          <p className="text-gray-500">No job recommendations available.</p>
-        )}
+        {/* Scrollable Container */}
+        <div
+          ref={containerRef}
+          className="flex overflow-x-auto space-x-4 px-6 h-auto scrollbar-hide scroll-smooth flex-nowrap"
+          style={{ scrollbarWidth: "none" }}
+        >
+          {jobs.length > 0 ? (
+            jobs.map((job, index) => (
+              <JobCard key={index} job={job} gradient={gradients[index % gradients.length]} />
+            ))
+          ) : (
+            <p className="text-gray-500">No job recommendations available.</p>
+          )}
+        </div>
+
+        {/* Right Scroll Button */}
+        <button
+          onClick={scrollRight}
+          className="absolute -right-5 cursor-pointer z-10 p-2 bg-white shadow-md rounded-full hover:bg-gray-200 transition-all"
+        >
+          <IoIosArrowDropright size={28} />
+        </button>
       </div>
-
-      {/* Right Scroll Button */}
-      <button
-        onClick={scrollRight}
-        className="absolute right-0 z-10 p-2 bg-white shadow-md rounded-full hover:bg-gray-200 transition-all"
-      >
-        <IoIosArrowDropright size={28} />
-      </button>
     </div>
   );
 };

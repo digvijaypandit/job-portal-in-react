@@ -49,33 +49,35 @@ const resources = [
 
 const ResourcesSection = () => {
   return (
-    <div className="my-20 flex flex-wrap justify-center gap-6">
-      {resources.map((resource, index) => (
-        <motion.div
-          key={index}
-          whileHover={{ scale: 1.03, y: -5 }} // Lift up & scale effect
-          transition={{ type: 'spring', stiffness: 200 }}
-        >
-          <Link to={resource.link} className="block">
-            <div
-              className={`relative flex items-center p-6 rounded-2xl shadow-lg w-96 h-40 overflow-hidden transition-all ${resource.bgColor}`}
-            >
-              {/* Text Content */}
-              <div className="z-10">
-                <h3 className="text-xl font-semibold text-gray-900">{resource.name}</h3>
-                <p className="text-gray-700 text-sm max-w-60">{resource.description}</p>
-              </div>
+    <div>
+      <div className="my-20 flex flex-wrap justify-center gap-6">
+        {resources.map((resource, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.03, y: -5 }} // Lift up & scale effect
+            transition={{ type: 'spring', stiffness: 200 }}
+          >
+            <Link to={resource.link} className="block">
+              <div
+                className={`relative flex items-center p-6 rounded-2xl shadow-lg w-96 h-40 overflow-hidden transition-all ${resource.bgColor}`}
+              >
+                {/* Text Content */}
+                <div className="z-10">
+                  <h3 className="text-xl font-semibold text-gray-900">{resource.name}</h3>
+                  <p className="text-gray-700 text-sm max-w-60">{resource.description}</p>
+                </div>
 
-              {/* Background Image */}
-              <img
-                src={resource.image}
-                alt={resource.name}
-                className="absolute right-4 h-24 object-cover"
-              />
-            </div>
-          </Link>
-        </motion.div>
-      ))}
+                {/* Background Image */}
+                <img
+                  src={resource.image}
+                  alt={resource.name}
+                  className="absolute right-4 h-24 object-cover"
+                />
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };

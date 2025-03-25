@@ -81,7 +81,7 @@ function ApplicantHome() {
       <Navbar />
       <div className="text-3xl font-semibold text-center mt-20">
        <h1 className="text-5xl font-bold cursor-context-menu select-none">
-          <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent select-text">
+          <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent select-none">
             <Typewriter
               words={['Find Your Dream Job!', 'Advance Your Career!', 'Join Top Companies!',]}
               loop={true}
@@ -90,13 +90,14 @@ function ApplicantHome() {
               typeSpeed={60}
               deleteSpeed={30}
               delaySpeed={2000}
-              className="select-none"
             />
           </span>
         </h1>
     </div>
       <JobSearchBox />
-      <JobRecommendations jobs={jobData}/>
+      <div className='px-8 mt-8'>
+        <JobRecommendations jobs={jobData}/>
+      </div>
       <ResourcesSection />
       <Footer />
     </div>
