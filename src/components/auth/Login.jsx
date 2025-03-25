@@ -108,7 +108,7 @@ const LoginPage = () => {
           <img
             src="/images/Login_animation.gif"
             alt="Login Animation"
-            className="w-full h-full select-none object-cover"
+            className="select-none object-cover mix-blend-darken"
           />
         </motion.div>
 

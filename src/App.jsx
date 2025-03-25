@@ -5,7 +5,7 @@ import Login from "./components/auth/Login";
 import Registration from "./components/auth/Registration"
 import ProtectedRoute from "./feature/ProtectedRoute"
 import NotFound from "./feature/NotFound"
-import ApplicantDashboard from "./pages/ApplicantDashboard";
+import ApplicantDashboard from "./pages/ApplicantHome";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
 
         {/* Protected Routes (Require Authentication) */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<ApplicantDashboard />} />
+          <Route path="/applicant/home" element={<ApplicantDashboard />} />
         </Route>
 
         {/* Catch-all Route (404) */}
