@@ -46,8 +46,18 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <ul className="hidden lg:flex space-x-6 text-gray-700 font-medium">
-          <li><Link to="/applicant/home" className="hover:text-blue-900 transition">Home</Link></li>
-          <li><Link to="/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
+          {isApplicant && (
+            <>
+              <li><Link to="/applicant/home" className="hover:text-blue-500 transition">Home</Link></li>
+              <li><Link to="/applicant/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
+            </>
+          )}
+          {isEmployer && (
+            <>
+              <li><Link to="/applicant/home" className="hover:text-blue-900 transition">Home</Link></li>
+              <li><Link to="/applicant/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
+            </>
+          )}
           <li><Link to="/about" className="hover:text-blue-500 transition">About</Link></li>
           <li><Link to="/contact" className="hover:text-blue-500 transition">Contact</Link></li>
 

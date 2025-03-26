@@ -1,12 +1,16 @@
 import Sidebar from "../components/job/Sidebar";
-import JobDetails from "../components/job/JobDetails";
+import Navbar from "../components/applicant/Navbar";
+import JobListing from "../components/job/JobListing";
 
 const JobPage = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <JobDetails />
-    </div>
+    <>
+      <Navbar />
+      <div className="mt-20 flex h-screen">
+        <Sidebar />
+        <JobListing />
+      </div>
+    </>
   );
 };
 

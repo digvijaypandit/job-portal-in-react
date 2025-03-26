@@ -18,10 +18,10 @@ function App() {
         <Route path="/register-employer" element={<Registration />} />
         <Route path="/register-applicant" element={<Registration />} />
 
+          <Route path="/applicant/home" element={<ApplicantDashboard />} />
+          <Route path="/applicant/jobs" element={<JobPage />} />
         {/* Protected Routes (Require Authentication) */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/applicant/home" element={<ApplicantDashboard />} />
-          <Route path="/applicant/job" element={<JobPage />} />
         </Route>
 
         {/* Catch-all Route (404) */}
