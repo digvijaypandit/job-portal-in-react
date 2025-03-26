@@ -1,5 +1,5 @@
 import Sidebar from "../components/job/Sidebar";
-import Navbar from "../components/applicant/Navbar";
+import Navbar from "../components/comman/Navbar";
 import JobListing from "../components/job/JobListing";
 
 const JobPage = () => {

@@ -7,6 +7,8 @@ import ProtectedRoute from "./feature/ProtectedRoute"
 import NotFound from "./feature/NotFound"
 import ApplicantDashboard from "./pages/ApplicantHome";
 import JobPage from "./pages/JobPage";
+import About from "./components/comman/About";
+import Contact from "./components/comman/Contact";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register-employer" element={<Registration />} />
         <Route path="/register-applicant" element={<Registration />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
           <Route path="/applicant/home" element={<ApplicantDashboard />} />
           <Route path="/applicant/jobs" element={<JobPage />} />

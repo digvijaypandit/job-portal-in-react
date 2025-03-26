@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../components/applicant/Navbar'
+import Navbar from '../components/comman/Navbar'
 import JobSearchBox from '../components/applicant/JobSearchBox'
 import JobRecommendations from '../components/applicant/JobRecommendations'
 import ResourcesSection from '../components/applicant/ResourcesSection'
