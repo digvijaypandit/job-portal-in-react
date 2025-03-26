@@ -1,26 +1,41 @@
 import React from "react";
+import { MdOpenInNew } from "react-icons/md";
+import { IoTodayOutline, IoLocationOutline } from "react-icons/io5";
 
-const JobDetails = ({ data }) => {
-  if (!data) return <p className="p-4">Job not found!</p>;
-
+const JobHeader = ({ data }) => {
   return (
-    <div className=" p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold">{data.title}</h1>
-      <p className="text-gray-600">{data.company}</p>
-      <p className="mt-2 text-gray-500">{data.description}</p>
-      
-      <div className="mt-4">
-        <h3 className="font-semibold">Perks:</h3>
-        <ul className="list-disc ml-5">
-          {data.skills.map((skill, index) => (
-            <li key={index} className="text-gray-700">{skill}</li>
-          ))}
-        </ul>
+    <div className="bg-[#F4F0FF] p-6 rounded-lg shadow-md relative flex items-start gap-4">
+      {/* Left Border Accent */}
+      <div className="w-2 bg-purple-600 rounded-l-lg"></div>
+
+      {/* Logo Section */}
+      <div>
+        <img
+          src={data.companyLogo}
+          alt="Company Logo"
+          className="w-16 h-16 rounded-lg border border-gray-200 shadow-sm"
+        />
       </div>
-      
-      <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded">Apply Now</button>
+
+      {/* Job Details */}
+      <div className="flex-1">
+        <h2 className="text-2xl font-semibold text-gray-800">{data.title}</h2>
+        <p className="text-gray-500 text-lg">{data.company}</p>
+
+        {/* Meta Information */}
+        <div className="text-gray-600 mt-2 space-y-1">
+          <p className="flex items-center gap-2">
+            <IoLocationOutline className="text-xl" />
+            {data.location}
+          </p>
+          <p className="flex items-center gap-2">
+            <IoTodayOutline className="text-xl" />
+            <span className="font-medium">Updated On:</span> {data.updatedOn}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default JobDetails;
+export default JobHeader;

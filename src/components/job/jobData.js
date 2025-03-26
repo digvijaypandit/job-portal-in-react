@@ -4,6 +4,7 @@ const jobData = {
   company: "Sphinxhire.AI Private Limited",
   companyLogo: "https://play-lh.googleusercontent.com/FA_rzaEeLlumm0qh68q3z5Pt-PGMVPf2Z28_pbega7SaXSiKjSzh-0MZceB3FpdvQIBq",
   updatedOn: "Mar 25, 2025",
+  location: "Pune",
   eligibility: "Everyone can apply",
   description: `
     We are looking for a passionate and creative front-end developer to join our team. 

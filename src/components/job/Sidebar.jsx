@@ -9,7 +9,7 @@ const jobData = [
     logo: "https://yt3.googleusercontent.com/FJI5Lzbf2dMd32xOqhoKpJArJooZhoX6v2qOcFO-wjSZUvs3H9xqq2gK4DQ47X0KnYgf7X2rpdU=s900-c-k-c0x00ffffff-no-rj",
     applied: 100,
     deadline: "9 months left",
-    categories: ["All", "Engineering", "Software", "Backend","Software", "Backend"],
+    categories: ["All", "Engineering", "Software", "Backend", "Software", "Backend"],
   },
   {
     id: 2,
@@ -44,15 +44,17 @@ const Sidebar = () => {
   const [selectedJobId, setSelectedJobId] = useState(null);
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      {jobData.map((job) => (
-        <JobCard
-          key={job.id}
-          job={job}
-          selectedJobId={selectedJobId}
-          setSelectedJobId={setSelectedJobId}
-        />
-      ))}
+    <div className="m-2 mb-35 flex flex-col items-center space-x-4">
+      <div className="overflow-y-auto space-y-2 [&::-webkit-scrollbar]:hidden">
+        {jobData.map((job) => (
+          <JobCard
+            key={job.id}
+            job={job}
+            selectedJobId={selectedJobId}
+            setSelectedJobId={setSelectedJobId}
+          />
+        ))}
+      </div>
     </div>
   );
 };
