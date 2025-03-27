@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import Footer from "../footer";
+import Footer from "./footer";
 
 const Contact = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

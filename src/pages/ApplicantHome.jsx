@@ -3,7 +3,7 @@ import Navbar from '../components/comman/Navbar'
 import JobSearchBox from '../components/applicant/JobSearchBox'
 import JobRecommendations from '../components/applicant/JobRecommendations'
 import ResourcesSection from '../components/applicant/ResourcesSection'
-import Footer from '../components/footer'
+import Footer from '../components/comman/footer'
 import { Typewriter } from "react-simple-typewriter";
 
 function ApplicantHome() {

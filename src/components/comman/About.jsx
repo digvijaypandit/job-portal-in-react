@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Team from './Team'
 import Navbar from "./Navbar";
-import Footer from "../footer";
+import Footer from "./footer";
 
 const About = () => {
 

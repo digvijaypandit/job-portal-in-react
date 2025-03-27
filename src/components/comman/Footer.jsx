@@ -18,10 +18,10 @@ const Footer = () => {
 
         {/* Center: Navigation Links */}
         <div className="mt-6 md:mt-0 flex flex-wrap justify-center md:justify-start gap-6">
-          {["Home", "Jobs", "About Us", "Contact"].map((item, index) => (
+          {["Home", "Jobs", "About", "Contact"].map((item, index) => (
             <motion.a
               key={index}
-              href="/"
+              href={item}
               className="text-gray-300 hover:text-white transition"
               whileHover={{ scale: 1.1 }}
             >

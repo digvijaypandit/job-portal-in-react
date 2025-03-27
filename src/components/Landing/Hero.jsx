@@ -14,7 +14,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative h-screen select-none flex items-center justify-center bg-black text-white overflow-hidden">
+    <div className="relative h-screen select-none flex items-center justify-center bg-gray-800 text-white overflow-hidden">
       {/* Login & Signup Buttons (Top Right) */}
       <div className="absolute z-10 top-6 right-6 flex gap-4">
         <motion.button
