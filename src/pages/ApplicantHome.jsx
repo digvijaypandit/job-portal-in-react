@@ -74,32 +74,19 @@ function ApplicantHome() {
       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
     },
   ];
-  
+
 
   return (
     <div>
       <Navbar />
-      <div className="text-3xl font-semibold text-center mt-20">
-       <h1 className="text-5xl font-bold cursor-context-menu select-none">
-          <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent select-none">
-            <Typewriter
-              words={['Find Your Dream Job!', 'Advance Your Career!', 'Join Top Companies!',]}
-              loop={true}
-              cursor
-              cursorStyle="|"
-              typeSpeed={60}
-              deleteSpeed={30}
-              delaySpeed={2000}
-            />
-          </span>
-        </h1>
-    </div>
-      <JobSearchBox />
-      <div className='px-8 mt-8'>
-        <JobRecommendations jobs={jobData}/>
+      <div className="mt-20">
+        <JobSearchBox />
+        <div className='px-8 mt-8'>
+          <JobRecommendations jobs={jobData} />
+        </div>
+        <ResourcesSection />
+        <Footer />
       </div>
-      <ResourcesSection />
-      <Footer />
     </div>
   )
 }

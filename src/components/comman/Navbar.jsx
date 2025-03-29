@@ -113,7 +113,7 @@ const Navbar = () => {
             {isOpen && (
               <div className="absolute right-0 bg-white shadow-lg rounded-lg mt-2 w-40 transition-all duration-200">
                 <Link
-                  to="/profile"
+                  to="/applicant/profile"
                   className="flex items-center gap-2 hover:text-blue-600 px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-150"
                 >
                   <FaRegCircleUser />Profile

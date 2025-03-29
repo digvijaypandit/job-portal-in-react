@@ -13,6 +13,7 @@ import About from "./components/comman/About";
 import Contact from "./components/comman/Contact";
 import SavedJobs from "./pages/SavedJobs";
 import AppliedJobs from "./pages/AppliedJobs";
+import ApplicantProfile from "./pages/ApplicantProfile";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/applicant/saved-jobs" element={<SavedJobs />} />
           <Route path="/applicant/jobs" element={<JobPage />} />
           <Route path="/applicant/applied-jobs" element={<AppliedJobs />} />
+          <Route path="/applicant/profile" element={<ApplicantProfile />} />
         {/* Protected Routes (Require Authentication) */}
         <Route element={<ProtectedRoute />}>
         </Route>
