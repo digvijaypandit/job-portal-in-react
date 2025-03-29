@@ -14,6 +14,12 @@ import Contact from "./components/comman/Contact";
 import SavedJobs from "./pages/SavedJobs";
 import AppliedJobs from "./pages/AppliedJobs";
 import ApplicantProfile from "./pages/ApplicantProfile";
+import EmployerDashboard from "./pages/EmployerDashboard";
+import PostJobForm from "./pages/PostJobPage";
+import ManageJobs from "./pages/ManageJobs";
+import EditJob from "./pages/EditJob";
+import EmployerProfile from "./pages/EmployerProfile";
+import EmployerHome from "./pages/EmployerHome";
 
 function App() {
   return (
@@ -38,6 +44,12 @@ function App() {
         {/* Protected Routes (Require Authentication) */}
         <Route element={<ProtectedRoute />}>
         </Route>
+        <Route path="/employer/home" element={<EmployerHome />} />
+        <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+        <Route path="/employer/post-job" element={<PostJobForm />} />
+        <Route path="/employer/manage-jobs" element={<ManageJobs />} />
+        <Route path="/employer/edit-job" element={<EditJob />} />
+        <Route path="/employer/profile" element={<EmployerProfile />} />
 
         {/* Catch-all Route (404) */}
         <Route path="*" element={<NotFound />} />
