@@ -16,7 +16,7 @@ const Team = () => {
   };
 
   return (
-    <div className="py-16 text-center bg-gray-900 text-white relative">
+    <div className="py-16 text-center relative">
       <motion.h2
         className="text-4xl font-bold mb-12"
         initial={{ opacity: 0, y: -50 }}
@@ -41,14 +41,13 @@ const Team = () => {
               style={{
                 left: position === "center" ? "50%" : position === "left" ? "25%" : "75%",
                 transform: position === "center" ? "translateX(-50%) scale(1.3)" : "translateX(-50%) scale(0.9)",
-                filter: position === "center" ? "none" : "blur(1px)",
               }}
               onClick={() => handleClick(index)}
             >
               <motion.img
                 src={member.img}
                 alt={member.name}
-                className="rounded-full w-40 h-40 border-4 border-gray-500"
+                className="rounded-full w-40 h-40 border-4 border-gray-800"
                 whileHover={{ scale: position === "center" ? 1.4 : 1 }}
               />
               <motion.h3

@@ -1,35 +1,46 @@
 import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import Sphere from './Sphere';
-import Navbar from '../comman/Navbar'
-import { Typewriter } from 'react-simple-typewriter'
+import { motion } from 'framer-motion';
+import Navbar from '../comman/Navbar';
 
 function Home() {
   return (
     <div className="min-h-screen bg-white text-black relative select-none">
-      <div className="w-1/2 h-[500px] flex justify-center items-center">
-        <Canvas className="w-full h-full">
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <Sphere />
-        </Canvas>
-      </div>
+      {/* Navbar */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <Navbar />
+      </motion.div>
 
-      {/* navbar */}
-      <Navbar />
-
-      {/* Content for Hero Section */}
+      {/* Hero Section */}
       <div className="absolute top-10 left-0 z-10 mt-10 pl-10 container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="max-w-2xl">
+
+        {/* Left Side Content */}
+        <motion.div
+          className="max-w-2xl"
+          initial={{ x: -100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
           <h1 className="text-8xl font-bold mb-6">
-            Find your dream <span className="bg-gradient-to-br from-[#0091ff] via-[#4952fc] to-[#9b15e8] bg-clip-text text-transparent">job</span>
+            Find your dream{" "}
+            <span className="bg-gradient-to-br from-[#0091ff] via-[#4952fc] to-[#9b15e8] bg-clip-text text-transparent">
+              job
+            </span>
           </h1>
           <p className="text-gray-600 mb-8">
             Discover thousands of job opportunities from top companies.<br />Your career starts here.
           </p>
 
           {/* Search Form */}
-          <div className="flex w-xl mb-12 bg-gray-200 backdrop-blur-md backdrop-saturate-150 p-2 shadow-lg rounded-full items-center justify-center">
+          <motion.div
+            className="flex w-xl mb-12 bg-gray-200 backdrop-blur-md backdrop-saturate-150 p-2 shadow-lg rounded-full items-center justify-center"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
             <div className="bg-transparent ml-6">
               <label className="text-sm text-gray-600 mb-2">Job title</label>
               <input
@@ -51,7 +62,7 @@ function Home() {
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
               </svg>
             </button>
-          </div>
+          </motion.div>
 
           {/* Stats */}
           <div className="flex gap-16">
@@ -64,31 +75,95 @@ function Home() {
               <p className="text-gray-600">Daily Job Post</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Side Stats */}
-        <div className="relative left-0 w-1/2 h-[500px] flex justify-center items-center">
-            <div className="relative flex justify-center items-center min-h-screen">
-              {/* Outer Circle */}
-              <div className="absolute w-[400px] h-[400px] rounded-full border-[3px] border-blue-500 opacity-40"></div>
+        {/* Right Side (3D Character & Animated Circles) */}
+        <motion.div
+          className="relative left-0 w-1/2 h-[500px] flex justify-center items-center"
+          initial={{ x: 100, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <div className="relative flex justify-center items-center min-h-screen">
+            {/* Outer Circle */}
+            <motion.div
+              className="absolute w-[450px] h-[450px] rounded-full border-[3px] border-blue-700 opacity-40"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="w-full h-full bg bg-gradient-to-br from-blue-700 to-purple-800 rounded-full blur-3xl"></div>
+            </motion.div>
 
-              {/* Middle Circle */}
-              <div className="absolute w-[300px] h-[300px] rounded-full border-[3px] border-purple-500 opacity-50"></div>
+            {/* Middle Circle */}
+            <motion.div
+              className="absolute w-[378px] h-[378px] rounded-full border-[3px] border-blue-700 opacity-50"
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            ></motion.div>
 
-              {/* Inner Circle */}
-              <div className="absolute w-[200px] h-[200px] rounded-full border-[3px] border-pink-500 opacity-60"></div>
+            {/* Inner Circle */}
+            <motion.div
+              className="absolute w-[300px] h-[300px] rounded-full border-[3px] border-blue-700 opacity-60"
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            ></motion.div>
 
-              {/* Character Image (Placeholder) */}
+            {/* 3D Character */}
+            <motion.img
+              src="/images/3d-character.png"
+              alt="3D Character"
+              className="relative w-[350px] drop-shadow-xl"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            {/* Floating Glass Cards */}
+            <motion.div
+              className="absolute top-30 -left-34 w-[180px] flex items-center gap-2 bg-opacity-10 backdrop-blur-md border border-gray-500/30 p-4 rounded-xl shadow-lg"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
               <img
-                src="/images/3d-character.png"
-                alt="3D Character"
-                className="relative w-[250px] drop-shadow-xl"
-              />  
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2U2akySBgSHUK-foX-9SGFmLk6zEuGYNNqw&s"
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full border-2 border-blue-400"
+              />
+              <div>
+                <p className="text-black font-semibold">Ratings</p>
+                <div className="flex text-yellow-400">{"★".repeat(4)}{"☆".repeat(1)}</div>
+              </div>
+            </motion.div>
+
+            {/* More Cards with Similar Animations */}
+            <motion.div
+              className="absolute top-20 w-[180px] left-50 flex items-center gap-4 bg-opacity-10 backdrop-blur-md border border-gray-500/30 p-4 rounded-xl shadow-lg"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="w-10 h-10 bg-purple-500 flex items-center justify-center rounded-lg text-black">💼</div>
+              <div>
+                <p className="text-lg font-semibold">56.8K</p>
+                <p className="text-sm">Job vacancy</p>
+              </div>
+            </motion.div>
+            {/* Card 3 - Job Got */}
+            <motion.div className="absolute top-80 -left-24 w-[180px] flex flex-col bg-opacity-10 backdrop-blur-md border border-gray-500/30 p-4 rounded-xl shadow-lg"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-lg font-semibold text-black">90K+</span>
+                <img
+                  src="/images/morejobs.png"
+                  className="w-full"
+                />
+              </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Home;  

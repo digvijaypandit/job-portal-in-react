@@ -70,7 +70,7 @@ const RoadmapStep = ({ title, desc, image, index }) => {
 
 const Roadmap = () => {
   return (
-    <div className="bg-gray-900 text-white">
+    <div className="">
       <h2 className="text-4xl font-bold text-center py-12">Your Job Search Roadmap</h2>
 
       <div className="space-y-0">

@@ -14,7 +14,7 @@ function LandingPage() {
             <Jobs />
             <JobCategories />
             <Features />
-            <Roadmap />
+            {/* <Roadmap /> */}
             <AboutUs />
             <Footer />
         </div>

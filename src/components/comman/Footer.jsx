@@ -1,55 +1,127 @@
-import { motion } from "framer-motion";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <motion.footer
-      className="bg-gray-900 text-white py-10 px-6 md:px-20"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-    >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-        {/* Left: Logo & Description */}
-        <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold">Job Portal</h2>
-          <p className="text-gray-400 mt-2">Find your dream job with us!</p>
+    <footer className="bg-gray-900 text-white py-16 px-6 md:px-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10">
+        
+        {/* Section 1: Company Info */}
+        <div className="col-span-2">
+          <h2 className="text-3xl font-bold">Job Portal</h2>
+          <p className="text-gray-400 mt-3 leading-relaxed">
+            Find your dream job with the most trusted job marketplace.
+            Connect with top companies and kickstart your career today!
+          </p>
+          <p className="mt-4 text-gray-400">📧 Email: support@jobportal.com</p>
+          <p className="text-gray-400">📞 Phone: +1 (123) 456-7890</p>
         </div>
 
-        {/* Center: Navigation Links */}
-        <div className="mt-6 md:mt-0 flex flex-wrap justify-center md:justify-start gap-6">
-          {["Home", "Jobs", "About", "Contact"].map((item, index) => (
-            <motion.a
-              key={index}
-              href={item}
-              className="text-gray-300 hover:text-white transition"
-              whileHover={{ scale: 1.1 }}
-            >
-              {item}
-            </motion.a>
-          ))}
+        {/* Section 2: Quick Links */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Quick Links</h3>
+          <ul className="space-y-2">
+            {["Home", "Jobs", "About Us", "Contact", "Pricing", "Blog"].map((item, index) => (
+              <li key={index}>
+                <a
+                  href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Right: Social Media Icons */}
-        <div className="mt-6 md:mt-0 flex space-x-4">
-          {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, index) => (
-            <motion.a
-              key={index}
-              href="/"
-              className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-white hover:bg-blue-500 transition"
-              whileHover={{ scale: 1.2 }}
+        {/* Section 3: Resources */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Resources</h3>
+          <ul className="space-y-2">
+            {["FAQs", "Career Tips", "Interview Guide", "Salary Calculator"].map((item, index) => (
+              <li key={index}>
+                <a
+                  href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Section 4: Support */}
+        <div>
+          <h3 className="text-xl font-semibold mb-4">Support</h3>
+          <ul className="space-y-2">
+            {["Help Center", "Privacy Policy", "Terms of Service", "Report a Problem"].map((item, index) => (
+              <li key={index}>
+                <a
+                  href={`/${item.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="text-gray-300 hover:text-white transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Section 5: Newsletter Subscription */}
+        <div className="col-span-2 sm:col-span-1">
+          <h3 className="text-xl font-semibold mb-4">Subscribe to Our Newsletter</h3>
+          <p className="text-gray-400 mb-4">
+            Get the latest job updates and career tips straight to your inbox.
+          </p>
+          <form className="flex flex-col space-y-3">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="px-4 py-2 w-full text-gray-900 rounded-md focus:outline-none"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-md transition"
             >
-              <Icon size={20} />
-            </motion.a>
-          ))}
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+        {/* Section 6: Social Media */}
+        <div className="col-span-2 sm:col-span-1">
+          <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
+          <div className="flex space-x-4">
+            {[
+              { icon: FaFacebookF, link: "https://facebook.com", label: "Facebook" },
+              { icon: FaTwitter, link: "https://twitter.com", label: "Twitter" },
+              { icon: FaInstagram, link: "https://instagram.com", label: "Instagram" },
+              { icon: FaLinkedinIn, link: "https://linkedin.com", label: "LinkedIn" },
+            ].map(({ icon: Icon, link, label }, index) => (
+              <a
+                key={index}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-white hover:bg-blue-500 transition"
+              >
+                <Icon size={20} />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Bottom Copyright */}
-      <div className="mt-8 text-center text-gray-400 text-sm">
-        © {new Date().getFullYear()} Job Portal. All rights reserved.
+      {/* Divider */}
+      <div className="border-t border-gray-700 my-8"></div>
+
+      {/* Bottom Section */}
+      <div className="text-center text-gray-400 text-sm">
+        <p>© {new Date().getFullYear()} Job Portal. All rights reserved.</p>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
 

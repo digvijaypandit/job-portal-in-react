@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; // Import useSelector
 import { logoutUser } from "../../store/authSlice";
 import { FaSearch, FaBell, FaCommentDots, FaBars, FaTimes } from "react-icons/fa";
 import { PiSignOut } from "react-icons/pi";
@@ -14,8 +14,8 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth); // Get user from Redux store
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -46,35 +46,30 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <ul className="hidden lg:flex space-x-6 text-gray-700 font-medium">
-          {isApplicant && (
-            <>
-              <li><Link to="/applicant/home" className="hover:text-blue-500 transition">Home</Link></li>
-              <li><Link to="/applicant/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
-            </>
-          )}
-          {isEmployer && (
-            <>
-              <li><Link to="/applicant/home" className="hover:text-blue-900 transition">Home</Link></li>
-              <li><Link to="/applicant/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
-            </>
-          )}
+          <li><Link to="/" className="hover:text-blue-500 transition">Home</Link></li>
+          <li><Link to="/jobs" className="hover:text-blue-500 transition">Jobs</Link></li>
           <li><Link to="/about" className="hover:text-blue-500 transition">About</Link></li>
-          <li><Link to="/contact" className="hover:text-blue-500 transition">Contact</Link></li>
 
-          {isApplicant && (
+          {user ? (
             <>
-              <li><Link to="/applicant/dashboard" className="hover:text-blue-500 transition">Dashboard</Link></li>
-              <li><Link to="/applicant/saved-jobs" className="hover:text-blue-500 transition">Saved Jobs</Link></li>
-              <li><Link to="/applicant/applied-jobs" className="hover:text-blue-500 transition">Applied Jobs</Link></li>
-            </>
-          )}
+              {isApplicant && (
+                <>
+                  <li><Link to="/applicant/dashboard" className="hover:text-blue-500 transition">Dashboard</Link></li>
+                  <li><Link to="/applicant/saved-jobs" className="hover:text-blue-500 transition">Saved Jobs</Link></li>
+                  <li><Link to="/applicant/applied-jobs" className="hover:text-blue-500 transition">Applied Jobs</Link></li>
+                </>
+              )}
 
-          {isEmployer && (
-            <>
-              <li><Link to="/employer/dashboard" className="hover:text-blue-500 transition">Dashboard</Link></li>
-              <li><Link to="/employer/post-job" className="hover:text-blue-500 transition">Post Job</Link></li>
-              <li><Link to="/employer/manage-jobs" className="hover:text-blue-500 transition">Manage Jobs</Link></li>
+              {isEmployer && (
+                <>
+                  <li><Link to="/employer/dashboard" className="hover:text-blue-500 transition">Dashboard</Link></li>
+                  <li><Link to="/employer/post-job" className="hover:text-blue-500 transition">Post Job</Link></li>
+                  <li><Link to="/employer/manage-jobs" className="hover:text-blue-500 transition">Manage Jobs</Link></li>
+                </>
+              )}
             </>
+          ) : (
+              <></>
           )}
         </ul>
 
@@ -90,43 +85,50 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Icons */}
-          <Link to="/messages" className="text-gray-700 text-xl hover:text-blue-500">
-            <FaCommentDots />
-          </Link>
-          <Link to="/notifications" className="text-gray-700 text-xl hover:text-blue-500">
-            <FaBell />
-          </Link>
+          {user ? (
+            <>
+              <Link to="/messages" className="text-gray-700 text-xl hover:text-blue-500">
+                <FaCommentDots />
+              </Link>
+              <Link to="/notifications" className="text-gray-700 text-xl hover:text-blue-500">
+                <FaBell />
+              </Link>
 
-          {/* Profile Dropdown */}
-          <div className="relative cursor-pointer dropdown-container">
-            {/* User Icon Button */}
-            <button
-              onClick={toggleDropdown}
-              aria-label="User Menu"
-              className="text-gray-700 text-xl cursor-pointer hover:text-blue-500 focus:outline-none"
-            >
-              <FaRegCircleUser className="mt-1" />
-            </button>
-
-            {/* Dropdown Menu (Visible When isOpen is True) */}
-            {isOpen && (
-              <div className="absolute right-0 bg-white shadow-lg rounded-lg mt-2 w-40 transition-all duration-200">
-                <Link
-                  to="/applicant/profile"
-                  className="flex items-center gap-2 hover:text-blue-600 px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-150"
-                >
-                  <FaRegCircleUser />Profile
-                </Link>
+              {/* Profile Dropdown */}
+              <div className="relative cursor-pointer dropdown-container">
                 <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center hover:text-red-600 gap-2 px-4 cursor-pointer py-2 text-gray-700 hover:bg-gray-100 transition duration-150"
+                  onClick={toggleDropdown}
+                  aria-label="User Menu"
+                  className="text-gray-700 text-xl cursor-pointer hover:text-blue-500 focus:outline-none"
                 >
-                  <PiSignOut />Logout
+                  <FaRegCircleUser className="mt-1" />
                 </button>
+
+                {isOpen && (
+                  <div className="absolute right-0 bg-white shadow-lg rounded-lg mt-2 w-40 transition-all duration-200">
+                    <Link
+                      to="/applicant/profile"
+                      className="flex items-center gap-2 hover:text-blue-600 px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-150"
+                    >
+                      <FaRegCircleUser />Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center hover:text-red-600 gap-2 px-4 cursor-pointer py-2 text-gray-700 hover:bg-gray-100 transition duration-150"
+                    >
+                      <PiSignOut />Logout
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-gray-700 text-lg hover:text-blue-500">Login</Link>
+              <Link to="/signup" className="text-gray-700 text-lg hover:text-blue-500">Sign Up</Link>
+            </>
+          )}
+
           {/* Mobile Menu Button */}
           <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden text-2xl text-gray-700">
             {menuOpen ? <FaTimes /> : <FaBars />}
@@ -136,8 +138,9 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`lg:hidden fixed top-0 right-0 h-full w-3/4 sm:w-1/2 bg-white shadow-lg transform ${menuOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-300 ease-in-out`}
+        className={`lg:hidden fixed top-0 right-0 h-full w-3/4 sm:w-1/2 bg-white shadow-lg transform ${
+          menuOpen ? "translate-x-0" : "translate-x-full"
+        } transition-transform duration-300 ease-in-out`}
       >
         <div className="flex justify-end p-4">
           <button onClick={() => setMenuOpen(false)} className="text-2xl text-gray-700">
@@ -151,19 +154,21 @@ const Navbar = () => {
           <li><Link to="/about" className="block hover:text-blue-500">About</Link></li>
           <li><Link to="/contact" className="block hover:text-blue-500">Contact</Link></li>
 
-          {isApplicant && (
+          {user ? (
             <>
-              <li><Link to="/applicant/dashboard" className="block hover:text-blue-500">Dashboard</Link></li>
-              <li><Link to="/applicant/saved-jobs" className="block hover:text-blue-500">Saved Jobs</Link></li>
-              <li><Link to="/applicant/applied-jobs" className="block hover:text-blue-500">Applied Jobs</Link></li>
+              {isApplicant && (
+                <>
+                  <li><Link to="/applicant/dashboard" className="block hover:text-blue-500">Dashboard</Link></li>
+                  <li><Link to="/applicant/saved-jobs" className="block hover:text-blue-500">Saved Jobs</Link></li>
+                  <li><Link to="/applicant/applied-jobs" className="block hover:text-blue-500">Applied Jobs</Link></li>
+                </>
+              )}
+              <button onClick={handleLogout} className="block w-full text-left hover:text-red-600">Logout</button>
             </>
-          )}
-
-          {isEmployer && (
+          ) : (
             <>
-              <li><Link to="/employer/dashboard" className="block hover:text-blue-500">Dashboard</Link></li>
-              <li><Link to="/employer/post-job" className="block hover:text-blue-500">Post Job</Link></li>
-              <li><Link to="/employer/manage-jobs" className="block hover:text-blue-500">Manage Jobs</Link></li>
+              <li><Link to="/login" className="block hover:text-blue-500">Login</Link></li>
+              <li><Link to="/signup" className="block hover:text-blue-500">Sign Up</Link></li>
             </>
           )}
         </ul>

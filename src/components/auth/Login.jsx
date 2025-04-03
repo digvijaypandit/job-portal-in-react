@@ -11,132 +11,95 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("applicant"); // Default role
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = async () => {
     try {
-      const result = await dispatch(loginUser({ email, password })).unwrap();
-      console.log("Login Success:", result);
-
-      // Navigate based on role selection
-      if (role === "applicant") {
-        navigate("/applicant/home");
-      } else {
-        navigate("/employer/home");
-      }
+      await dispatch(loginUser({ email, password })).unwrap();
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
 
   return (
-    <div className="relative h-screen flex items-center justify-center bg-black text-white overflow-hidden px-4">
-      {/* Animated Background */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900"
-        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-      ></motion.div>
-
-      {/* Responsive Glassmorphic Container */}
-      <motion.div
-        className="relative flex flex-wrap md:flex-nowrap w-full max-w-7xl bg-white/10 backdrop-blur-xl rounded-2xl p-6 md:p-10 shadow-2xl border border-white/20"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
+    <div className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 px-4 md:px-6">
+      {/* Login Card */}
+      <div className="bg-white rounded-lg shadow-xl flex flex-col md:flex-row w-full max-w-7xl h-auto md:h-[90%] overflow-hidden">
         {/* Left: Login Form */}
-        <motion.div
-          className="w-full md:w-1/2 p-4 md:p-8 flex flex-col justify-center text-center md:text-left"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Sign In</h2>
-          <p className="text-gray-300 mb-6">Enter your credentials below.</p>
+        <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">Welcome to Our Application</h2>
+          <p className="text-gray-500 text-sm mt-2">Please login to use the platform.</p>
 
-          {/* Role Selection Dropdown */}
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            className="w-full p-3 mb-4 bg-white/20 text-white rounded-lg outline-none border border-transparent focus:border-purple-400 cursor-pointer"
-          >
-            <option value="applicant" className="text-black">Applicant</option>
-            <option value="employer" className="text-black">Employer</option>
-          </select>
-
-          {/* Login Inputs */}
+          {/* Email Input */}
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter E-mail"
             value={email}
-            className="w-full p-3 mb-4 bg-white/20 text-white rounded-lg outline-none border border-transparent focus:border-purple-400"
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full p-3 mt-6 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500"
           />
+
+          {/* Password Input */}
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 mb-4 bg-white/20 text-white rounded-lg outline-none border border-transparent focus:border-purple-400"
+            className="w-full p-3 mt-4 border border-gray-300 rounded-full focus:outline-none focus:border-purple-500"
           />
 
-          {/* Login Button */}
+          {/* Remember Me */}
+          <div className="flex items-center mt-4 text-sm text-gray-600">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={() => setRememberMe(!rememberMe)}
+              className="mr-2"
+            />
+            <label>Remember Me</label>
+          </div>
+
+          {/* Sign In Button */}
           <motion.button
-            className="w-full p-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-lg mt-4 shadow-lg"
-            whileHover={{ scale: 1.05, boxShadow: "0px 0px 20px rgba(128, 0, 128, 0.7)" }}
-            transition={{ duration: 0.3 }}
             onClick={handleLogin}
-            disabled={loading}
+            className="w-full p-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full mt-6 shadow-md hover:opacity-90 transition"
+            whileHover={{ scale: 1.05 }}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing in..." : "SIGN IN"}
           </motion.button>
 
-          {error && <p className="text-red-400 mt-2">{error}</p>}
-          <p className="text-sm text-gray-400 mt-3 cursor-pointer hover:text-white transition">
-            Forgot password?
-          </p>
-        </motion.div>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
-        {/* Center: Animated Image (Visible only on lg screens) */}
-        <motion.div
-          className="hidden lg:flex items-center justify-center w-full max-w-[400px]"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-        >
-          <img
-            src="/images/Login_animation.gif"
-            alt="Login Animation"
-            className="select-none object-cover mix-blend-darken"
-          />
-        </motion.div>
+          {/* Navigation Buttons */}
+          <div className="flex flex-col md:flex-row justify-center mt-6 space-y-4 md:space-y-0 md:space-x-4">
+            {/* Sign Up Button */}
+            <button
+              onClick={() => navigate("/signup")}
+              className="w-full md:w-auto px-6 py-2 border border-gray-300 rounded-full shadow-md hover:bg-gray-100 transition"
+            >
+              Create Account
+            </button>
 
-        {/* Right: Welcome Message */}
-        <motion.div
-          className="w-full md:w-1/2 p-4 md:p-8 flex flex-col justify-center text-center md:text-right"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-white">Welcome Back!</h2>
-          <p className="text-gray-300 mt-4">New here? Choose your role and register now:</p>
-          <div className="mt-6">
-            <motion.button
-              onClick={() => navigate("/register-applicant")}
-              className="w-full p-3 border border-purple-400 text-white rounded-lg mb-3 hover:bg-purple-600 transition"
+            {/* Home Button */}
+            <button
+              onClick={() => navigate("/")}
+              className="w-full md:w-auto px-6 py-2 border border-gray-300 rounded-full shadow-md hover:bg-gray-100 transition"
             >
-              Register as Applicant
-            </motion.button>
-            <motion.button
-              onClick={() => navigate("/register-employer")}
-              className="w-full p-3 border border-blue-400 text-white rounded-lg hover:bg-blue-600 transition"
-            >
-              Register as Employer
-            </motion.button>
+              Go Back Home
+            </button>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+
+        {/* Right: Illustration (Hidden on Small Screens) */}
+        <div className="hidden md:flex w-1/2 items-center justify-center p-6 bg-gray-100">
+          <img
+            src="http://konnect.aisect.org/Content/Images/Capture.png"
+            alt="Illustration"
+            className="max-w-xs md:max-w-md"
+          />
+        </div>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/comman/Navbar";
 import Footer from "../components/comman/footer";
-import { FaSearch, FaFilter, FaBriefcase, FaBuilding, FaUsers, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import JobCategories from "../components/Landing/JobCategories"
+import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const Job = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,15 +33,7 @@ const Job = () => {
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       {/* Navbar */}
-      {isLoggedIn ? <Navbar /> : (
-        <div className="flex justify-between items-center px-6 py-4 shadow-md bg-white">
-          <h2 className="text-2xl font-bold">Job Portal</h2>
-          <div className="flex items-center space-x-4">
-            <button className="px-5 py-2 border rounded-lg hover:bg-gray-200 transition">Login</button>
-            <button className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">Get Started</button>
-          </div>
-        </div>
-      )}
+       <Navbar />
 
       {/* Hero Section */}
       <motion.section className="text-center py-16 px-5" initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -53,7 +46,7 @@ const Job = () => {
       {/* Search & Filters */}
       <div className="max-w-4xl mx-auto px-6 py-6 flex gap-4">
         <div className="flex flex-grow border rounded-lg p-2 shadow-sm bg-gray-100 hover:shadow-md transition">
-          <FaSearch className="text-gray-500 mx-2" />
+          <FaSearch className="text-gray-500 mx-2 mt-1" />
           <input 
             type="text" 
             placeholder="Search for jobs or companies..." 
@@ -71,29 +64,28 @@ const Job = () => {
       <div className="max-w-6xl mx-auto px-6 py-10 relative">
         <h2 className="text-3xl font-bold mb-6">Latest Job Openings</h2>
         <div className="relative">
-          <button className="absolute left-0 top-1/2 transform -translate-y-1/2 p-3 bg-white shadow-lg rounded-full" onClick={() => scrollRef.current.scrollBy({ left: -300, behavior: "smooth" })}>
+          <button className="absolute -left-10 top-[45%] hover:bg-gray-300 cursor-pointer transform -translate-y-1/2 p-3 bg-white shadow-lg rounded-full" onClick={() => scrollRef.current.scrollBy({ left: -300, behavior: "smooth" })}>
             <FaChevronLeft className="text-gray-600" />
           </button>
-          <div ref={scrollRef} className="flex overflow-x-auto space-x-6 pb-4 scroll-smooth snap-x">
+          <div ref={scrollRef} className="flex overflow-x-auto space-x-6 pb-4 scroll-smooth snap-x no-scrollbar [&::-webkit-scrollbar]:w-2">
             {filteredJobs.map((job) => (
-              <motion.div
+              <div
                 key={job.id}
-                whileHover={{ scale: 1.05 }}
                 className={`p-6 rounded-xl shadow-lg bg-gradient-to-br ${job.gradient} text-white w-80 min-w-[320px] snap-center`}
               >
                 <h3 className="text-xl font-bold">{job.title}</h3>
                 <p className="text-white/80">{job.company}</p>
                 <p className="text-white/70">{job.location}</p>
-                <button className="mt-4 px-4 py-2 bg-white text-blue-700 rounded-lg hover:bg-gray-200 transition">Apply Now</button>
-              </motion.div>
+                <button className="mt-4 px-4 py-2 cursor-pointer bg-white text-blue-700 rounded-lg hover:bg-gray-200 transition">Apply Now</button>
+              </div>
             ))}
           </div>
-          <button className="absolute right-0 top-1/2 transform -translate-y-1/2 p-3 bg-white shadow-lg rounded-full" onClick={() => scrollRef.current.scrollBy({ left: 300, behavior: "smooth" })}>
+          <button className="absolute -right-10 top-[45%] hover:bg-gray-300 transform -translate-y-1/2 p-3 bg-white shadow-lg rounded-full" onClick={() => scrollRef.current.scrollBy({ left: 300, behavior: "smooth" })}>
             <FaChevronRight className="text-gray-600" />
           </button>
         </div>
+        <JobCategories />
       </div>
-
       <Footer />
     </div>
   );

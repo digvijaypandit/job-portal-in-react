@@ -18,15 +18,11 @@ const About = () => {
     
   return (
     <div 
-      className={`transition-colors duration-500 ${
-        isLoggedIn ? "bg-white text-gray-900" : "bg-gradient-to-b from-gray-900 to-gray-800 text-white"
-      } min-h-screen`}
+      className="transition-colors duration-500 bg-white text-gray-900"
     >
 
       {/* Navbar or Auth Buttons */}
-      {isLoggedIn ? (
         <Navbar />
-      ) : (
         <div className="flex justify-between items-center px-6 py-4">
           <h2 className="text-xl font-bold text-white cursor-pointer hover:scale-110 transition hover:text-blue-400" onClick={() => navigate("/")}>Job Portal</h2>
           <div>
@@ -38,7 +34,6 @@ const About = () => {
             </button>
           </div>
         </div>
-      )}
 
       {/* Hero Section */}
       <motion.section 
@@ -64,7 +59,7 @@ const About = () => {
         ].map((item, index) => (
           <motion.div 
             key={index}
-            className={`bg-white/10 ${isLoggedIn ? "bg-gray-100 text-gray-900" : "text-white"} 
+            className={`bg-white/10  "bg-gray-100 text-gray-900 text-white"
               backdrop-blur-lg p-6 rounded-xl shadow-lg text-center border border-${item.color}`}
             whileHover={{ scale: 1.05 }}
           >
@@ -78,27 +73,7 @@ const About = () => {
       <section>
         <Team />
       </section>
-
-      {/* Conditional CTA or Footer */}
-      {isLoggedIn ? (
         <Footer />
-      ) : (
-        <motion.section 
-          className="py-20 bg-gray-900 text-center"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7 }}
-        >
-          <h2 className="text-3xl font-semibold text-white">Join Us Today!</h2>
-          <p className="mt-2">
-            Create your profile and start your journey towards a brighter career.
-          </p>
-          <button onClick={() => navigate("/login")} className="mt-5 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition">
-            Get Started
-          </button>
-        </motion.section>
-      )}
-
     </div>
   );
 };

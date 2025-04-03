@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const AboutUs = () => {
   return (
-    <div className="py-20 bg-gray-900 text-white text-center">
+    <div className="py-20 text-center">
       <motion.h2
         className="text-4xl font-bold"
         initial={{ opacity: 0, y: -20 }}
@@ -12,7 +12,7 @@ const AboutUs = () => {
         About Us
       </motion.h2>
       <motion.p
-        className="mt-4 text-lg max-w-3xl mx-auto text-gray-300"
+        className="mt-4 text-lg max-w-3xl mx-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, delay: 0.3 }}
@@ -21,7 +21,7 @@ const AboutUs = () => {
         Our platform ensures seamless hiring experiences and career growth.  
       </motion.p>
       <motion.p
-        className="mt-4 text-lg max-w-3xl mx-auto text-gray-400"
+        className="mt-4 text-lg max-w-3xl mx-auto text-gray-600"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
