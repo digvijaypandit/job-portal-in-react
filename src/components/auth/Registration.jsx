@@ -31,12 +31,28 @@ const RegistrationPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle registration
   const handleRegister = async () => {
     try {
       const endpoint = isEmployer ? "/employers/register" : "/employees/register";
-      await dispatch(registerUser({ endpoint, formData })).unwrap();
-      navigate("/login"); // Redirect on success
+
+      const commonData = {
+        ...formData,
+        roles: [
+          {
+            name: isEmployer ? "Employer" : "Employee"
+          }
+        ]
+      };
+
+      const employeeExtras = {
+        registerDate: new Date().toISOString(),
+        employeeScore: 85,
+      };
+
+      const finalData = isEmployer ? commonData : { ...commonData, ...employeeExtras };
+
+      await dispatch(registerUser({ endpoint, formData: finalData })).unwrap();
+      navigate("/login");
     } catch (error) {
       console.error("Registration failed:", error);
     }
@@ -66,8 +82,7 @@ const RegistrationPage = () => {
             >
               <span
                 className={`absolute left-1 top-1 w-18 h-8 flex items-center justify-center font-semibold 
-                  rounded-full transition-all duration-300 ease-in-out shadow ${
-                    isEmployer ? "translate-x-[105%] bg-white text-black" : "bg-blue-500 text-white"
+                  rounded-full transition-all duration-300 ease-in-out shadow ${isEmployer ? "translate-x-[105%] bg-white text-black" : "bg-blue-500 text-white"
                   }`}
               >
                 {isEmployer ? "Employer" : "Applicant"}

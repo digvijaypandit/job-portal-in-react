@@ -45,7 +45,7 @@ function Home() {
               <label className="text-sm text-gray-600 mb-2">Job title</label>
               <input
                 type="text"
-                placeholder="UI/UX Designer"
+                placeholder="Dev Ops"
                 className="w-full bg-transparent focus:outline-none text-black"
               />
             </div>
@@ -53,7 +53,7 @@ function Home() {
               <label className="text-sm text-gray-600 mb-2">Location</label>
               <input
                 type="text"
-                placeholder="New York"
+                placeholder="Pune"
                 className="w-full bg-transparent focus:outline-none text-black"
               />
             </div>

@@ -49,7 +49,6 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
         <Route path="/" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
-        <Route path="/Home" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/signup" element={<AnimatedPage><RegistrationPage /></AnimatedPage>} />
         <Route path="/register-employer" element={<AnimatedPage><Registration /></AnimatedPage>} />
@@ -58,21 +57,24 @@ const AnimatedRoutes = () => {
         <Route path="/jobs" element={<AnimatedPage><Jobs /></AnimatedPage>} />
 
         {/* Applicant Routes */}
-        <Route path="/applicant/home" element={<AnimatedPage><ApplicantHome /></AnimatedPage>} />
-        <Route path="/applicant/dashboard" element={<AnimatedPage><ApplicantDashboard /></AnimatedPage>} />
-        <Route path="/applicant/saved-jobs" element={<AnimatedPage><SavedJobs /></AnimatedPage>} />
-        <Route path="/applicant/jobs" element={<AnimatedPage><JobPage /></AnimatedPage>} />
-        <Route path="/applicant/applied-jobs" element={<AnimatedPage><AppliedJobs /></AnimatedPage>} />
-        <Route path="/applicant/profile" element={<AnimatedPage><ApplicantProfile /></AnimatedPage>} />
+
+        <Route element={<ProtectedRoute allowedRoles={["ROLE_EMPLOYEE"]} />}>
+          <Route path="/applicant/home" element={<ApplicantHome />} />
+          <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
+          <Route path="/applicant/saved-jobs" element={<SavedJobs />} />
+          <Route path="/applicant/jobs" element={<JobPage />} />
+          <Route path="/applicant/applied-jobs" element={<AppliedJobs />} />
+          <Route path="/applicant/profile" element={<ApplicantProfile />} />
+        </Route>
 
         {/* Protected Employer Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/employer/home" element={<AnimatedPage><EmployerHome /></AnimatedPage>} />
-          <Route path="/employer/dashboard" element={<AnimatedPage><EmployerDashboard /></AnimatedPage>} />
-          <Route path="/employer/post-job" element={<AnimatedPage><PostJobForm /></AnimatedPage>} />
-          <Route path="/employer/manage-jobs" element={<AnimatedPage><ManageJobs /></AnimatedPage>} />
-          <Route path="/employer/edit-job" element={<AnimatedPage><EditJob /></AnimatedPage>} />
-          <Route path="/employer/profile" element={<AnimatedPage><EmployerProfile /></AnimatedPage>} />
+        <Route element={<ProtectedRoute allowedRoles={["ROLE_EMPLOYER"]} />}>
+          <Route path="/employer/home" element={<EmployerHome />} />
+          <Route path="/employer/dashboard" element={<EmployerDashboard />} />
+          <Route path="/employer/post-job" element={<PostJobForm />} />
+          <Route path="/employer/manage-jobs" element={<ManageJobs />} />
+          <Route path="/employer/edit-job" element={<EditJob />} />
+          <Route path="/employer/profile" element={<EmployerProfile />} />
         </Route>
 
         {/* 404 Not Found Page */}

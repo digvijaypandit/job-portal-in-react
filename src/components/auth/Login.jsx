@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -7,20 +7,36 @@ import { motion } from "framer-motion";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+
+  const { loading, error, user } = useSelector((state) => state.auth);
+  const roles = user?.roles || [];
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false); // trigger flag
 
   const handleLogin = async () => {
     try {
       await dispatch(loginUser({ email, password })).unwrap();
-      navigate("/dashboard");
+      setLoginSuccess(true); // trigger navigation in useEffect
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+
+  // ✅ Navigate when user is set after login
+  useEffect(() => {
+    if (loginSuccess && roles.length > 0) {
+      if (roles.includes("ROLE_EMPLOYER")) {
+        navigate("/employer/home");
+      } else if (roles.includes("ROLE_EMPLOYEE")) {
+        navigate("/applicant/home");
+      }
+    }
+  }, [loginSuccess, roles, navigate]);
+
+  // ...rest of your UI (no change needed there)
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 px-4 md:px-6">

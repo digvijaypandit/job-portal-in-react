@@ -1,7 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+
+// Utility: Check if token is expired
+const isTokenExpired = (exp) => {
+  return Date.now() >= exp * 1000;
+};
+
+// Get token and decode user (if valid)
+const token = localStorage.getItem("token");
+let user = null;
+
+if (token) {
+  try {
+    const decoded = jwtDecode(token);
+    if (!isTokenExpired(decoded.exp)) {
+      user = {
+        email: decoded.sub,
+        roles: decoded.roles,
+      };
+    } else {
+      localStorage.removeItem("token");
+    }
+  } catch (e) {
+    localStorage.removeItem("token");
+  }
+}
 
 // Async Thunk for Login
 export const loginUser = createAsyncThunk(
@@ -30,7 +56,7 @@ export const registerUser = createAsyncThunk(
   async ({ endpoint, formData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${VITE_BASE_URL}${endpoint}`, // Dynamic endpoint for employer/employee
+        `${VITE_BASE_URL}${endpoint}`,
         formData,
         {
           headers: { "Content-Type": "application/json" },
@@ -38,7 +64,9 @@ export const registerUser = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Registration failed");
+      return rejectWithValue(
+        error.response?.data?.message || "Registration failed"
+      );
     }
   }
 );
@@ -48,17 +76,29 @@ export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        return rejectWithValue("No token found");
+      }
+
       const response = await axios.post(
         `${VITE_BASE_URL}/auth/logout`,
         {},
         {
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      // If API call succeeds, remove the token
+      localStorage.removeItem("token");
+      localStorage.removeItem("roles");
+
       return response.data;
     } catch (error) {
+      console.error("Logout failed:", error);
       return rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
@@ -68,8 +108,8 @@ export const logoutUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
-    token: localStorage.getItem("token") || null,
+    user,
+    token,
     loading: false,
     error: null,
   },
@@ -82,10 +122,16 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        const token = action.payload.accessToken;
+        const decoded = jwtDecode(token);
         state.loading = false;
-        state.token = action.payload.accessToken;
-        state.user = action.payload.user;
-        localStorage.setItem("token", action.payload.accessToken);
+        state.token = token;
+        state.user = {
+          email: decoded.sub,
+          roles: decoded.roles,
+        };
+        localStorage.setItem("token", token);
+        localStorage.setItem("roles", JSON.stringify(decoded.roles));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -115,7 +161,8 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         localStorage.removeItem("token");
-      })
+        localStorage.removeItem("roles");
+      })      
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
