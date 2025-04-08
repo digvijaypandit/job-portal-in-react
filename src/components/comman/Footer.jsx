@@ -88,30 +88,6 @@ const Footer = () => {
             </button>
           </form>
         </div>
-
-        {/* Section 6: Social Media */}
-        <div className="col-span-2 sm:col-span-1">
-          <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
-          <div className="flex space-x-4">
-            {[
-              { icon: FaFacebookF, link: "https://facebook.com", label: "Facebook" },
-              { icon: FaTwitter, link: "https://twitter.com", label: "Twitter" },
-              { icon: FaInstagram, link: "https://instagram.com", label: "Instagram" },
-              { icon: FaLinkedinIn, link: "https://linkedin.com", label: "LinkedIn" },
-            ].map(({ icon: Icon, link, label }, index) => (
-              <a
-                key={index}
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full text-white hover:bg-blue-500 transition"
-              >
-                <Icon size={20} />
-              </a>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Divider */}

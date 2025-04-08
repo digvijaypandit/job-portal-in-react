@@ -4,10 +4,9 @@ import JobSearchBox from '../components/applicant/JobSearchBox'
 import JobRecommendations from '../components/applicant/JobRecommendations'
 import ResourcesSection from '../components/applicant/ResourcesSection'
 import Footer from '../components/comman/footer'
-import { Typewriter } from "react-simple-typewriter";
+import { Typewriter } from 'react-simple-typewriter'
 
 function ApplicantHome() {
-
   const jobData = [
     {
       job_title: "Front End Developer",
@@ -15,7 +14,7 @@ function ApplicantHome() {
       location: "In Office",
       applied: 8250,
       time_left: "9 months left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png", // Replace with actual logo URL
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
     },
     {
       job_title: "React Developer",
@@ -75,20 +74,50 @@ function ApplicantHome() {
     },
   ];
 
-
   return (
     <div>
       <Navbar />
-      <div className="mt-20">
-        <JobSearchBox />
-        <div className='px-8 mt-8'>
+      <div className="mt-20 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8">
+          {/* Left Side - Text and Search */}
+          <div className="w-full lg:w-[55%] text-center lg:text-left">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-800">
+              <Typewriter
+                words={['Unlock Ambition', 'Find Your Dream Job', 'Explore Great Companies']}
+                loop={0}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </h1>
+            <p className="text-md sm:text-lg text-gray-600 mb-6">
+              Apply to a plethora of hiring opportunities & work with your dream companies!
+            </p>
+            <JobSearchBox />
+          </div>
+
+          {/* Right Side - Image */}
+          <div className="w-full lg:w-[45%]">
+            <img
+              src="https://d8it4huxumps7.cloudfront.net/uploads/images/67c821501ca0d_jobs_header_img.png?d=1000x600"
+              alt="Jobs Banner"
+              className="w-full max-w-[500px] mx-auto lg:mx-0"
+            />
+          </div>
+        </div>
+
+        {/* Job Recommendations */}
+        <div className="mt-16">
           <JobRecommendations jobs={jobData} />
         </div>
+
         <ResourcesSection />
-        <Footer />
       </div>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default ApplicantHome
+export default ApplicantHome;

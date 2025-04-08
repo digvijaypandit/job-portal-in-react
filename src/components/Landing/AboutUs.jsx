@@ -26,7 +26,7 @@ const AboutUs = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, delay: 0.5 }}
       >
-        From fresh graduates to experienced professionals, we help everyone land their dream job.
+        For fresh graduates, we help everyone land their dream job.
       </motion.p>
     </div>
   );

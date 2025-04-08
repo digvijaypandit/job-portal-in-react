@@ -4,13 +4,14 @@ import Navbar from "../components/comman/Navbar";
 import Footer from "../components/comman/footer";
 import JobCategories from "../components/Landing/JobCategories"
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Typewriter } from 'react-simple-typewriter'
 
 const Job = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
-  
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -33,31 +34,53 @@ const Job = () => {
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       {/* Navbar */}
-       <Navbar />
+      <Navbar />
 
-      {/* Hero Section */}
-      <motion.section className="text-center py-16 px-5" initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-        <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
-          Discover Your Dream Job
-        </h1>
-        <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">Find opportunities that match your skills and passion.</p>
-      </motion.section>
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-6 py-16 ml-8 mt-10">
+        {/* Left Side - Heading, Description, and Search */}
+        <motion.div
+          className="w-full lg:w-[55%] text-center lg:text-left"
+          initial={{ opacity: 0, y: -40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-800">
+            <Typewriter
+              words={['Discover Your Dream Job']}
+              typeSpeed={30}
+            />
+          </h1>
+          <p className="text-md sm:text-lg text-gray-600 mb-8 max-w-xl mx-auto lg:mx-0">
+            Find opportunities that align with your skills, values, and career goals.
+          </p>
 
-      {/* Search & Filters */}
-      <div className="max-w-4xl mx-auto px-6 py-6 flex gap-4">
-        <div className="flex flex-grow border rounded-lg p-2 shadow-sm bg-gray-100 hover:shadow-md transition">
-          <FaSearch className="text-gray-500 mx-2 mt-1" />
-          <input 
-            type="text" 
-            placeholder="Search for jobs or companies..." 
-            className="bg-transparent outline-none w-full"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+          {/* Search Bar + Filters */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-grow items-center border rounded-lg px-3 py-2 shadow-sm bg-gray-100 hover:shadow-md transition-all">
+              <FaSearch className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Search jobs or companies..."
+                className="bg-transparent outline-none w-full text-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            <button className="px-5 py-2 flex items-center justify-center bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all text-sm">
+              <FaFilter className="mr-2" /> Filters
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Right Side - Image or Illustration */}
+        <div className="w-full lg:w-[45%]">
+          <img
+            loading="lazy"
+            src="https://d8it4huxumps7.cloudfront.net/uploads/images/67c821501ca0d_jobs_header_img.png?d=1000x600"
+            alt="Job search illustration"
+            className="w-full max-w-[500px] mx-auto lg:mx-0"
           />
         </div>
-        <button className="px-5 py-2 flex items-center bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition">
-          <FaFilter className="mr-2" /> Filters
-        </button>
       </div>
 
       {/* Job Listings */}

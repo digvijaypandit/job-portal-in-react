@@ -49,6 +49,7 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
         <Route path="/" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
+        <Route path="/home" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/signup" element={<AnimatedPage><RegistrationPage /></AnimatedPage>} />
         <Route path="/register-employer" element={<AnimatedPage><Registration /></AnimatedPage>} />
