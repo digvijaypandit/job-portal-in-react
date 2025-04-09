@@ -1,79 +1,96 @@
-import React,{useState, useEffect} from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import Team from './Team'
+import Team from "./Team";
 import Navbar from "./Navbar";
 import Footer from "./footer";
 
 const About = () => {
+  const cards = [
+    {
+      title: "Our Mission",
+      desc: "To empower individuals by creating a seamless bridge between ambition and opportunity. We aim to transform the hiring process into a dynamic, transparent, and efficient experience for both candidates and employers.",
+      color: "from-blue-500 to-blue-700",
+    },
+    {
+      title: "Our Vision",
+      desc: "To become the world's most trusted and user-centric job portal—where careers are launched, talent is nurtured, and companies grow with confidence.",
+      color: "from-purple-500 to-indigo-600",
+    },
+    {
+      title: "Our Core Values",
+      desc: "We are driven by innovation, fueled by integrity, and committed to delivering excellence in every interaction. Our platform is built with people at the center—because every career journey matters.",
+      color: "from-green-500 to-emerald-600",
+    },
+  ];
 
-    const navigate = useNavigate();
-
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
-      useEffect(() => {
-        const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token);
-    }, []);
-    
   return (
-    <div 
-      className="transition-colors duration-500 bg-white text-gray-900"
-    >
-
-      {/* Navbar or Auth Buttons */}
-        <Navbar />
-        <div className="flex justify-between items-center px-6 py-4">
-          <h2 className="text-xl font-bold text-white cursor-pointer hover:scale-110 transition hover:text-blue-400" onClick={() => navigate("/")}>Job Portal</h2>
-          <div>
-            <button onClick={() => navigate("/login")} className="px-5 py-2 mr-4 border border-white rounded-lg hover:bg-white hover:text-black transition">
-              Login
-            </button>
-            <button onClick={() => navigate("/login")} className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-              Get Started
-            </button>
-          </div>
-        </div>
+    <div className="bg-white text-gray-900 transition-colors duration-500">
+      <Navbar />
 
       {/* Hero Section */}
-      <motion.section 
-        className="text-center py-20 px-5"
-        initial={{ opacity: 0, y: -50 }}
+      <motion.section
+        className="text-center py-24 px-6 bg-gradient-to-br from-blue-50 to-purple-50"
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          About Our Job Portal
+        <h1 className="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-200 via-blue-700 to-purple-600">
+          Who We Are
         </h1>
-        <p className="mt-4 text-lg max-w-3xl mx-auto">
-          Connecting top talent with leading employers through an intuitive and powerful platform.
+        <p className="mt-6 text-xl max-w-3xl mx-auto text-gray-700 leading-relaxed">
+          At <span className="font-bold text-blue-600">JobPortal</span>, we’re redefining how people find jobs and how employers find the right talent. Our platform blends advanced technology with human insight to power smarter career moves.
         </p>
       </motion.section>
 
       {/* Mission, Vision, Values */}
-      <section className="py-16 px-10 max-w-6xl mx-auto grid md:grid-cols-3 gap-10">
-        {[
-          { title: "Our Mission", desc: "To bridge the gap between job seekers and employers with innovation.", color: "blue-400" },
-          { title: "Our Vision", desc: "To be the most trusted job portal for career growth.", color: "purple-400" },
-          { title: "Our Values", desc: "Integrity, innovation, and excellence drive us forward.", color: "green-400" },
-        ].map((item, index) => (
-          <motion.div 
+      <section className="py-20 px-8 max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
+        {cards.map((item, index) => (
+          <motion.div
             key={index}
-            className={`bg-white/10  "bg-gray-100 text-gray-900 text-white"
-              backdrop-blur-lg p-6 rounded-xl shadow-lg text-center border border-${item.color}`}
-            whileHover={{ scale: 1.05 }}
+            className="bg-white cursor-pointer rounded-xl p-8 shadow-xl border-t-4"
+            whileHover={{ scale: 1.03 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
           >
-            <h3 className={`text-2xl font-semibold text-${item.color}`}>{item.title}</h3>
-            <p className="mt-2">{item.desc}</p>
+            <div
+              className={`h-1 w-20 mb-4 rounded-full bg-gradient-to-r ${item.color}`}
+            ></div>
+            <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+              {item.title}
+            </h3>
+            <p className="text-gray-600 leading-relaxed">{item.desc}</p>
           </motion.div>
         ))}
       </section>
 
+      {/* What Sets Us Apart Section */}
+      <motion.section
+        className="bg-gray-50 py-20 px-6"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-6 text-gray-800">What Sets Us Apart</h2>
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            We’re not just another job portal. We’re a mission-driven team passionate about simplifying careers. With personalized recommendations, verified employers, and real-time communication tools, we provide a platform that works for everyone—from entry-level candidates to executive professionals.
+          </p>
+        </div>
+      </motion.section>
+
       {/* Team Section */}
-      <section>
-        <Team />
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-10 text-gray-800">Meet Our Team</h2>
+          <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
+            Behind our platform is a passionate team of technologists, designers, and career coaches committed to your growth. Get to know the minds that make JobBridge possible.
+          </p>
+          <Team />
+        </div>
       </section>
-        <Footer />
+
+      <Footer />
     </div>
   );
 };

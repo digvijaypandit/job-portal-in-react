@@ -39,7 +39,7 @@ const Job = () => {
       <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-6 py-16 ml-8 mt-10">
         {/* Left Side - Heading, Description, and Search */}
         <motion.div
-          className="w-full lg:w-[55%] text-center lg:text-left"
+          className="w-full max-w-[800px] lg:w-[55%] relative 2xl:left-150"
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

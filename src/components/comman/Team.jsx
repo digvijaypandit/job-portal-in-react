@@ -1,73 +1,104 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaLinkedinIn } from "react-icons/fa";
+import { PiGithubLogoFill } from "react-icons/pi";
 
 const members = [
-  { name: "Jishan Shaikh", role: "Backend Developer", img: "/images/Jishan.jpg" },
-  { name: "Digvijay Pandit", role: "Full-Stack Developer", img: "/images/Digvijay.jpg" },
-  { name: "Gaurav Pawar", role: "Frontend Developer", img: "/images/Gaurav.jpg" },
+  {
+    name: "Jishan Shaikh",
+    role: "Backend Developer",
+    img: "/images/Jishan.jpg",
+    bio: "Builds scalable backend systems with Node.js, Express, and MongoDB.",
+    github: "https://github.com/jishanshaikh",
+    linkedin: "https://linkedin.com/in/jishanshaikh",
+  },
+  {
+    name: "Digvijay Pandit",
+    role: "Full-Stack Developer",
+    img: "/images/Digvijay.jpg",
+    bio: "Full-stack wizard with expertise in React, Node.js, and cloud services.",
+    github: "https://github.com/digvijaypandit",
+    linkedin: "https://linkedin.com/in/digvijaypandit",
+  },
+  {
+    name: "Gaurav Pawar",
+    role: "Frontend Developer",
+    img: "/images/Gaurav.jpg",
+    bio: "Crafts pixel-perfect interfaces with React, TailwindCSS, and animation magic.",
+    github: "https://github.com/gauravpawar",
+    linkedin: "https://linkedin.com/in/gauravpawar",
+  }
 ];
 
-const Team = () => {
-  const [activeIndex, setActiveIndex] = useState(1);
+const TeamCarousel = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleClick = (index) => {
-    if (index === activeIndex) return;
-    setActiveIndex(index);
-  };
+  // Auto switch developer every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % members.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="py-16 text-center relative">
-      <motion.h2
-        className="text-4xl font-bold mb-12"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        Meet the Developers
-      </motion.h2>
+    <div className="relative h-screen flex items-center justify-center bg-white px-6">
+      <div className="max-w-6xl w-full relative">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col-reverse lg:flex-row items-center bg-white shadow-xl rounded-xl p-8 lg:p-12 gap-8"
+          >
+            {/* Text Content */}
+            <div className="lg:w-1/2 text-center lg:text-left">
+              <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                I’m {members[activeIndex].name},<br />
+                a {members[activeIndex].role}
+              </h1>
+              <p className="text-gray-600 mb-6">
+                {members[activeIndex].bio}
+              </p>
 
-      <div className="relative flex justify-center items-center h-96 w-full">
-        {members.map((member, index) => {
-          let position = "left";
-          if (index === activeIndex) position = "center";
-          else if ((index + 1) % members.length === activeIndex) position = "right";
+              <div className="flex items-center justify-center lg:justify-start gap-6 mt-4">
+                <a
+                  href={members[activeIndex].linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedinIn  />
+                </a>
+                <a
+                  href={members[activeIndex].github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <PiGithubLogoFill />
+                </a>
+              </div>
+            </div>
 
-          return (
+            {/* Image */}
             <motion.div
-              key={index}
-              className={`absolute cursor-pointer transition-all duration-700 ${
-                position === "center" ? "z-10" : "z-0 opacity-70"
-              }`}
-              style={{
-                left: position === "center" ? "50%" : position === "left" ? "25%" : "75%",
-                transform: position === "center" ? "translateX(-50%) scale(1.3)" : "translateX(-50%) scale(0.9)",
-              }}
-              onClick={() => handleClick(index)}
+              className="lg:w-1/2"
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <motion.img
-                src={member.img}
-                alt={member.name}
-                className="rounded-full w-40 h-40 border-4 border-gray-800"
-                whileHover={{ scale: position === "center" ? 1.4 : 1 }}
+              <img
+                src={members[activeIndex].img}
+                alt={members[activeIndex].name}
+                className="rounded-lg w-full max-w-sm mx-auto object-cover"
               />
-              <motion.h3
-                className="text-2xl font-semibold mt-4"
-                animate={{ opacity: position === "center" ? 1 : 0.8 }}
-              >
-                {member.name}
-              </motion.h3>
-              <motion.p
-                className="text-gray-400"
-                animate={{ opacity: position === "center" ? 1 : 0.8 }}
-              >
-                {member.role}
-              </motion.p>
             </motion.div>
-          );
-        })}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
 };
 
-export default Team;
+export default TeamCarousel;

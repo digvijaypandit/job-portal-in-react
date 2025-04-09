@@ -64,7 +64,7 @@ function Home() {
             </button>
           </motion.div>
 
-          {/* Stats */}
+          {/* Stats
           <div className="flex gap-16">
             <div>
               <h3 className="text-4xl font-bold text-primary">35000</h3>
@@ -74,7 +74,7 @@ function Home() {
               <h3 className="text-4xl font-bold text-primary">8550+</h3>
               <p className="text-gray-600">Daily Job Post</p>
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Right Side (3D Character & Animated Circles) */}

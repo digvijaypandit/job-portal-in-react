@@ -5,6 +5,7 @@ import JobRecommendations from '../components/applicant/JobRecommendations'
 import ResourcesSection from '../components/applicant/ResourcesSection'
 import Footer from '../components/comman/footer'
 import { Typewriter } from 'react-simple-typewriter'
+import JobCategory from '../components/job/JobCategory'
 
 function ApplicantHome() {
   const jobData = [
@@ -109,10 +110,10 @@ function ApplicantHome() {
         </div>
 
         {/* Job Recommendations */}
-        <div className="mt-16">
+        <div className="mt-16 mb-2">
           <JobRecommendations jobs={jobData} />
         </div>
-
+        <JobCategory />
         <ResourcesSection />
       </div>
       <Footer />
