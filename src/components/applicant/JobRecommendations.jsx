@@ -7,7 +7,7 @@ import { IoPeople } from "react-icons/io5";
 const JobCard = ({ job, gradient }) => {
   return (
     <div
-      className={`relative p-4 rounded-2xl min-w-[260px] h-60 bg-white text-gray-900 flex flex-col justify-between overflow-hidden group transition duration-300`}
+      className={`relative p-4 border-1 rounded-2xl min-w-[260px] h-60 bg-white text-gray-900 flex flex-col justify-between overflow-hidden group transition duration-300`}
     >
       <div className={`absolute top-0 left-0 w-full h-20 rounded-t-2xl z-0 ${gradient}`} />
       <div className="absolute top-3 right-3 bg-white p-1 rounded-lg z-10 transition-transform duration-300 group-hover:scale-110">
