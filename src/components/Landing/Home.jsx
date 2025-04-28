@@ -15,28 +15,28 @@ function Home() {
       </motion.div>
 
       {/* Hero Section */}
-      <div className="absolute top-10 left-0 z-10 mt-10 pl-10 container mx-auto px-4 py-6 flex justify-between items-center">
+      <div className="absolute top-10 left-0 z-10 mt-10 pl-10 container mx-auto px-4 py-6 flex flex-col lg:flex-row justify-between items-center">
 
         {/* Left Side Content */}
         <motion.div
-          className="max-w-2xl"
+          className="max-w-2xl w-full mb-8 lg:mb-0"
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <h1 className="text-8xl font-bold mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-6">
             Find your dream{" "}
             <span className="bg-gradient-to-br from-[#0091ff] via-[#4952fc] to-[#9b15e8] bg-clip-text text-transparent">
               job
             </span>
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-gray-600 mb-8 text-lg sm:text-xl">
             Discover thousands of job opportunities from top companies.<br />Your career starts here.
           </p>
 
           {/* Search Form */}
           <motion.div
-            className="flex w-xl mb-12 bg-gray-200 backdrop-blur-md backdrop-saturate-150 p-2 shadow-lg rounded-full items-center justify-center"
+            className="flex w-full lg:w-xl mb-12 bg-gray-200 backdrop-blur-md backdrop-saturate-150 p-2 shadow-lg rounded-full items-center justify-center"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -63,23 +63,11 @@ function Home() {
               </svg>
             </button>
           </motion.div>
-
-          {/* Stats
-          <div className="flex gap-16">
-            <div>
-              <h3 className="text-4xl font-bold text-primary">35000</h3>
-              <p className="text-gray-600">Live Jobs</p>
-            </div>
-            <div>
-              <h3 className="text-4xl font-bold text-primary">8550+</h3>
-              <p className="text-gray-600">Daily Job Post</p>
-            </div>
-          </div> */}
         </motion.div>
 
         {/* Right Side (3D Character & Animated Circles) */}
         <motion.div
-          className="relative left-0 w-1/2 h-[500px] flex justify-center items-center"
+          className="relative w-full lg:w-1/2 h-[500px] flex justify-center items-center"
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -87,7 +75,7 @@ function Home() {
           <div className="relative flex justify-center items-center min-h-screen">
             {/* Outer Circle */}
             <motion.div
-              className="absolute w-[450px] h-[450px] rounded-full border-[3px] border-blue-700 opacity-40"
+              className="absolute w-[350px] h-[350px] lg:w-[450px] lg:h-[450px] rounded-full border-[3px] border-blue-700 opacity-40"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -96,14 +84,14 @@ function Home() {
 
             {/* Middle Circle */}
             <motion.div
-              className="absolute w-[378px] h-[378px] rounded-full border-[3px] border-blue-700 opacity-50"
+              className="absolute w-[300px] h-[300px] lg:w-[378px] lg:h-[378px] rounded-full border-[3px] border-blue-700 opacity-50"
               animate={{ scale: [1, 1.03, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             ></motion.div>
 
             {/* Inner Circle */}
             <motion.div
-              className="absolute w-[300px] h-[300px] rounded-full border-[3px] border-blue-700 opacity-60"
+              className="absolute w-[250px] h-[250px] lg:w-[300px] lg:h-[300px] rounded-full border-[3px] border-blue-700 opacity-60"
               animate={{ scale: [1, 1.02, 1] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             ></motion.div>
@@ -112,7 +100,7 @@ function Home() {
             <motion.img
               src="/images/3d-character.png"
               alt="3D Character"
-              className="relative w-[350px] drop-shadow-xl"
+              className="relative w-[250px] lg:w-[350px] drop-shadow-xl"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -166,4 +154,4 @@ function Home() {
   );
 }
 
-export default Home;  
+export default Home;

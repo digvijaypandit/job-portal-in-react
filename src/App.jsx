@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import LandingPage from "./pages/LandingPage";
 import Jobs from "./pages/Jobs";
 import Login from "./components/auth/Login";
-import Registration from "./components/auth/Registration";
 import ProtectedRoute from "./feature/ProtectedRoute";
 import NotFound from "./feature/NotFound";
 import ApplicantDashboard from "./pages/ApplicantDashboard";
@@ -23,6 +22,7 @@ import EditJob from "./pages/EditJob";
 import EmployerProfile from "./pages/EmployerProfile";
 import EmployerHome from "./pages/EmployerHome";
 import RegistrationPage from "./components/auth/Registration";
+import Unauthorized from "./feature/Unauthorized";
 
 // Page Transition Animation Variants
 const pageVariants = {
@@ -49,17 +49,14 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         {/* Public Routes */}
         <Route path="/" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
-        <Route path="/home" element={<AnimatedPage><LandingPage /></AnimatedPage>} />
         <Route path="/login" element={<AnimatedPage><Login /></AnimatedPage>} />
         <Route path="/signup" element={<AnimatedPage><RegistrationPage /></AnimatedPage>} />
-        <Route path="/register-employer" element={<AnimatedPage><Registration /></AnimatedPage>} />
-        <Route path="/register-applicant" element={<AnimatedPage><Registration /></AnimatedPage>} />
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route path="/jobs" element={<AnimatedPage><Jobs /></AnimatedPage>} />
 
         {/* Applicant Routes */}
 
-        <Route element={<ProtectedRoute allowedRoles={["ROLE_EMPLOYEE"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["Applicant"]} />}>
           <Route path="/applicant/home" element={<ApplicantHome />} />
           <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
           <Route path="/applicant/saved-jobs" element={<SavedJobs />} />
@@ -69,7 +66,7 @@ const AnimatedRoutes = () => {
         </Route>
 
         {/* Protected Employer Routes */}
-        <Route element={<ProtectedRoute allowedRoles={["ROLE_EMPLOYER"]} />}>
+        <Route element={<ProtectedRoute allowedRoles={["Employer"]} />}>
           <Route path="/employer/home" element={<EmployerHome />} />
           <Route path="/employer/dashboard" element={<EmployerDashboard />} />
           <Route path="/employer/post-job" element={<PostJobForm />} />
@@ -77,6 +74,8 @@ const AnimatedRoutes = () => {
           <Route path="/employer/edit-job" element={<EditJob />} />
           <Route path="/employer/profile" element={<EmployerProfile />} />
         </Route>
+
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* 404 Not Found Page */}
         <Route path="*" element={<AnimatedPage><NotFound /></AnimatedPage>} />

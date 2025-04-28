@@ -1,69 +1,68 @@
-import { useState } from "react";
-import { FaFilter } from "react-icons/fa";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { MdOutlineMouse } from "react-icons/md";
 
-const FilterBar = () => {
-  const [filterCount, setFilterCount] = useState(6); 
-  const [userTypeCount, setUserTypeCount] = useState(1);
-  const [domainCount, setDomainCount] = useState(1);
+const FilterBar = ({ searchQuery, onSearchChange, setFilters }) => {
+  const handleFilterChange = (e, filterType) => {
+    setFilters((prev) => ({
+      ...prev,
+      [filterType]: e.target.value,
+    }));
+  };
 
   return (
-    <div className="flex items-center gap-3 bg-white p-3 shadow-sm rounded-lg z-50">
-      {/* Jobs Button */}
-      <button className="flex items-center gap-2 bg-blue-600 text-white px-8 py-2 rounded-full font-medium">
-        Jobs
-      </button>
+    <div className="w-full space-y-4">
+      {/* Main Filter Bar */}
+      <div className="flex flex-wrap items-center gap-3 bg-white p-4 shadow-lg rounded-xl">
+        {/* Search Box */}
+        <div className="flex-1 min-w-[200px]">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={onSearchChange}
+            placeholder="Search jobs by title or keyword..."
+            className="w-full border border-gray-300 px-4 py-2 rounded-full text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+          />
+        </div>
 
-      {/* Sort by Salary */}
-      <button className="border border-gray-300 px-4 py-2 rounded-full flex items-center gap-2 text-gray-600">
-        Salary (High to Low)
-      </button>
-
-      {/* Filters Button */}
-      <button className="border border-gray-300 px-4 py-2 rounded-full flex items-center gap-2 text-gray-600 relative">
-        <FaFilter />
-        Filters
-        {filterCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
-            {filterCount}
-          </span>
-        )}
-      </button>
-
-      {/* Dropdown Filters */}
-      {["Location", "Work Type", "Category"].map((filter, index) => (
-        <button
-          key={index}
-          className="border border-gray-300 px-4 py-2 rounded-full flex items-center gap-2 text-gray-600"
-        >
-          {filter} <IoChevronDownOutline />
-        </button>
-      ))}
-
-      {/* Filters with Count */}
-      {[
-        { label: "User Type", count: userTypeCount },
-        { label: "Domain", count: domainCount },
-      ].map((item, index) => (
-        <button
-          key={index}
-          className="border border-gray-300 px-4 py-2 rounded-full flex items-center gap-2 text-gray-600 relative"
-        >
-          {item.label} <IoChevronDownOutline />
-          {item.count > 0 && (
-            <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full">
-              {item.count}
-            </span>
-          )}
-        </button>
-      ))}
-
-      {/* Quick Apply Button */}
-      <button className="flex items-center gap-2 border border-green-500 text-green-500 px-4 py-2 rounded-full font-medium">
-        <MdOutlineMouse />
-        Quick Apply
-      </button>
+        {/* Dropdown Filters */}
+        {[{
+          value: "", // Add dynamic value from filters
+          onChange: (e) => handleFilterChange(e, "location"),
+          options: ["New York", "San Francisco", "Los Angeles", "Chicago", "Remote"],
+          label: "Location"
+        }, {
+          value: "",
+          onChange: (e) => handleFilterChange(e, "workType"),
+          options: ["Office", "Remote", "Hybrid"],
+          label: "Work Type"
+        }, {
+          value: "",
+          onChange: (e) => handleFilterChange(e, "category"),
+          options: ["Software Development", "Marketing", "Design", "Product Management", "Sales"],
+          label: "Category"
+        }, {
+          value: "",
+          onChange: (e) => handleFilterChange(e, "salary"),
+          options: ["Low to High", "High to Low"],
+          label: "Salary"
+        }, {
+          value: "",
+          onChange: (e) => handleFilterChange(e, "postDate"),
+          options: ["24 Hours", "Past Week", "Past Month"],
+          label: "Post Date"
+        }].map(({ value, onChange, options, label }, idx) => (
+          <div key={idx} className="relative min-w-[150px]">
+            <select
+              value={value}
+              onChange={onChange}
+              className="w-full border border-gray-300 px-4 py-2 rounded-full text-gray-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            >
+              <option value="">{label}</option>
+              {options.map((opt, i) => (
+                <option key={i} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

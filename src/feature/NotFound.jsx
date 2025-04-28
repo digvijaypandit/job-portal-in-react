@@ -17,7 +17,7 @@ const NotFound = () => {
       />
 
       {/* Centered Text and Button Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/50">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/30">
         {/* Animated 404 Text */}
         <motion.h1
           className="text-6xl md:text-8xl font-bold"

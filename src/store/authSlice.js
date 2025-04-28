@@ -4,12 +4,10 @@ import { jwtDecode } from "jwt-decode";
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-// Utility: Check if token is expired
-const isTokenExpired = (exp) => {
-  return Date.now() >= exp * 1000;
-};
+//Utility: Check if token is expired
+const isTokenExpired = (exp) => Date.now() >= exp * 1000;
 
-// Get token and decode user (if valid)
+//Load user from token (if valid)
 const token = localStorage.getItem("token");
 let user = null;
 
@@ -18,6 +16,7 @@ if (token) {
     const decoded = jwtDecode(token);
     if (!isTokenExpired(decoded.exp)) {
       user = {
+        id: decoded.id,
         email: decoded.sub,
         roles: decoded.roles,
       };
@@ -29,7 +28,9 @@ if (token) {
   }
 }
 
-// Async Thunk for Login
+//Async Thunks
+
+// LOGIN
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
@@ -38,9 +39,7 @@ export const loginUser = createAsyncThunk(
         `${VITE_BASE_URL}/auth/login`,
         userData,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
       return response.data;
@@ -50,13 +49,13 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Async Thunk for Registration
+// REGISTER
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async ({ endpoint, formData }, { rejectWithValue }) => {
+  async ({ formData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${VITE_BASE_URL}${endpoint}`,
+        `${VITE_BASE_URL}/auth/register`,
         formData,
         {
           headers: { "Content-Type": "application/json" },
@@ -71,40 +70,26 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-// Async Thunk for Logout
+// LOGOUT
 export const logoutUser = createAsyncThunk(
   "auth/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
 
-      if (!token) {
-        return rejectWithValue("No token found");
-      }
+      if (!token) return rejectWithValue("No token found");
 
-      const response = await axios.post(
-        `${VITE_BASE_URL}/auth/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // If API call succeeds, remove the token
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       localStorage.removeItem("roles");
 
-      return response.data;
+      return true;
     } catch (error) {
-      console.error("Logout failed:", error);
       return rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
 );
 
-// Auth Slice
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -116,7 +101,7 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Login Cases
+      //Login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -124,13 +109,18 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         const token = action.payload.accessToken;
         const decoded = jwtDecode(token);
+
         state.loading = false;
         state.token = token;
         state.user = {
+          id: decoded.id,
           email: decoded.sub,
           roles: decoded.roles,
         };
+
+        // Save to localStorage
         localStorage.setItem("token", token);
+        localStorage.setItem("userId", decoded.id);
         localStorage.setItem("roles", JSON.stringify(decoded.roles));
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -138,7 +128,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Registration Cases
+      //Register
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -151,7 +141,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Logout Cases
+      //Logout
       .addCase(logoutUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -160,9 +150,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = null;
         state.token = null;
-        localStorage.removeItem("token");
-        localStorage.removeItem("roles");
-      })      
+      })
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react"; 
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -8,40 +8,47 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // User type state
   const [isEmployer, setIsEmployer] = useState(false);
+  const [error, setError] = useState(""); // For error messages
+  const [loading, setLoading] = useState(false); // For submit button state
+
   const userType = isEmployer ? "Employer" : "Applicant";
 
-  // Form state
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    contactNumber: "",
-    country: "",
-    state: "",
-    city: "",
-    street: "",
-    pinCode: "",
-  });
+  const fieldNames = [
+    "firstName", "lastName", "email", "password", "contactNumber",
+    "country", "state", "city", "street", "pinCode"
+  ];
 
-  // Handle input change
+  const [formData, setFormData] = useState(
+    Object.fromEntries(fieldNames.map((key) => [key, ""]))
+  );
+
+  const inputRefs = useRef({});
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // Clear error when typing
   };
 
   const handleRegister = async () => {
-    try {
-      const endpoint = isEmployer ? "/employers/register" : "/employees/register";
+    for (let field of fieldNames) {
+      if (!formData[field]) {
+        const fieldLabel = field.replace(/([A-Z])/g, " $1").trim();
+        setError(`${fieldLabel} is required.`);
+        alert(`${fieldLabel} is required.`);
+        inputRefs.current[field]?.focus();
+        return;
+      }
+    }
 
+    try {
+      setLoading(true);
+      setError("");
+
+      // Common data with only role as a string, no endpoint here
       const commonData = {
         ...formData,
-        roles: [
-          {
-            name: isEmployer ? "Employer" : "Employee"
-          }
-        ]
+        role: isEmployer ? "Employer" : "Employee", // Send the role as a string
       };
 
       const employeeExtras = {
@@ -51,19 +58,29 @@ const RegistrationPage = () => {
 
       const finalData = isEmployer ? commonData : { ...commonData, ...employeeExtras };
 
-      await dispatch(registerUser({ endpoint, formData: finalData })).unwrap();
+      // Dispatch the action to register user (no endpoint needed)
+      await dispatch(registerUser({ formData: finalData })).unwrap();
+
+      alert("Registration successful! Please login.");
       navigate("/login");
-    } catch (error) {
-      console.error("Registration failed:", error);
+    } catch (err) {
+      const message = err || "Registration failed. Please try again.";
+      setError(message);
+      alert(`⚠️ ${message}`);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleRegister();
   };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 px-4">
-      {/* Card */}
       <div className="bg-white rounded-lg shadow-xl flex w-full max-w-8xl h-[90%] overflow-hidden">
-        {/* Right: Illustration (Hidden on Small Screens) */}
-        <div className="hidden md:flex w-1/2 tems-center justify-center p-4 bg-gray-100">
+        {/* Right: Illustration */}
+        <div className="hidden md:flex w-1/2 items-center justify-center p-4 bg-gray-100">
           <img
             src="https://img.freepik.com/free-vector/code-typing-concept-illustration_114360-4296.jpg"
             alt="Illustration"
@@ -73,36 +90,60 @@ const RegistrationPage = () => {
 
         {/* Left: Registration Form */}
         <div className="w-full md:w-2/3 p-6 flex flex-col justify-center">
-          {/* Toggle Switch (Smaller) */}
-          <div className="flex items-center justify-center mb-4">
+          {/* Role Toggle */}
+          <div className="flex flex-col items-center mb-6 w-full px-2">
             <div
-              className={`relative flex w-40 h-10 rounded-full transition bg-gray-300 shadow cursor-pointer 
-                ${isEmployer ? "bg-gradient-to-r from-blue-500 to-purple-600" : "bg-gray-300"}`}
+              className="flex justify-between w-full max-w-sm px-1 py-1 bg-gray-200 rounded-full shadow-inner cursor-pointer transition-colors"
               onClick={() => setIsEmployer(!isEmployer)}
+              role="switch"
+              aria-checked={isEmployer}
+              title="Click to switch between Applicant and Employer"
             >
-              <span
-                className={`absolute left-1 top-1 w-18 h-8 flex items-center justify-center font-semibold 
-                  rounded-full transition-all duration-300 ease-in-out shadow ${isEmployer ? "translate-x-[105%] bg-white text-black" : "bg-blue-500 text-white"
-                  }`}
+              <div
+                className={`w-1/2 text-center text-sm font-semibold py-2 rounded-full transition-all duration-300 ${
+                  !isEmployer ? "bg-blue-500 text-white" : "text-gray-500"
+                }`}
               >
-                {isEmployer ? "Employer" : "Applicant"}
-              </span>
+                Applicant
+              </div>
+              <div
+                className={`w-1/2 text-center text-sm font-semibold py-2 rounded-full transition-all duration-300 ${
+                  isEmployer ? "bg-purple-600 text-white" : "text-gray-500"
+                }`}
+              >
+                Employer
+              </div>
             </div>
+
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              Select your role to see the right form.
+            </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-800 text-center">Create {userType} Account</h2>
-          <p className="text-gray-500 text-xs text-center mt-1">Fill in your details to get started.</p>
+          <h2 className="text-2xl font-bold text-gray-800 text-center">
+            Create {userType} Account
+          </h2>
+          <p className="text-gray-500 text-xs text-center mt-1">
+            Fill in your details to get started.
+          </p>
 
-          {/* Input Fields (Smaller) */}
+          {/* Error Display */}
+          {error && (
+            <p className="text-red-600 text-sm text-center mt-2 mb-2">{error}</p>
+          )}
+
+          {/* Input Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-            {["firstName", "lastName", "email", "password", "contactNumber", "country", "state", "city", "street", "pinCode"].map((field) => (
+            {fieldNames.map((field) => (
               <input
                 key={field}
+                ref={(el) => (inputRefs.current[field] = el)}
                 type={field === "password" ? "password" : "text"}
                 name={field}
-                placeholder={field.replace(/([A-Z])/g, " $1").trim()} // Format field names
+                placeholder={field.replace(/([A-Z])/g, " $1").trim()}
                 value={formData[field]}
                 onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
               />
             ))}
@@ -111,10 +152,11 @@ const RegistrationPage = () => {
           {/* Register Button */}
           <motion.button
             onClick={handleRegister}
-            className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg mt-4 shadow-md hover:opacity-90 transition text-sm"
-            whileHover={{ scale: 1.03 }}
+            className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg mt-4 shadow-md hover:opacity-90 transition text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+            whileHover={!loading ? { scale: 1.03 } : {}}
+            disabled={loading}
           >
-            Register as {userType}
+            {loading ? "Registering..." : `Register as ${userType}`}
           </motion.button>
 
           {/* Navigation Buttons */}
@@ -125,7 +167,6 @@ const RegistrationPage = () => {
             >
               Already have an account? Sign In
             </button>
-
             <button
               onClick={() => navigate("/")}
               className="w-full md:w-auto px-4 py-1 border border-gray-300 rounded-lg shadow-md hover:bg-gray-100 transition text-sm text-black"

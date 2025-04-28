@@ -4,7 +4,8 @@ import AdditionalInfo from "./AdditionalInfo";
 import ContactSection from "./ContactSection";
 import JobDescription from "./JobDescription";
 
-const JobListing = () => {
+const JobListing = ({selectedJobId}) => {
+  console.log(selectedJobId)
   return (
     <div className="mt-2 min-h-screen overflow-y-auto max-h-100
       [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-gray-100
