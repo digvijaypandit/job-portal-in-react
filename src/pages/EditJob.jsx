@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import jobData from "../components/job/jobData"; // Import existing job data
 import Navbar from "../components/comman/Navbar";
 import Footer from "../components/comman/footer";
 import { useNavigate } from "react-router-dom";

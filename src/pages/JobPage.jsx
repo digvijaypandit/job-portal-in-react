@@ -92,7 +92,7 @@ const JobPage = () => {
           selectedJobId={selectedJobId}
           setSelectedJobId={setSelectedJobId}
         />
-        <JobListing selectedJobId={selectedJobId} />
+        <JobListing selectedJobId={"680efeeb5d480995f1195916"} />
       </div>
     </div>
   );

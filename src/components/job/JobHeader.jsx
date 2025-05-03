@@ -13,13 +13,13 @@ const JobHeader = ({ data }) => {
             className="w-16 h-16 rounded-lg"
           />
           <div className="px-2">
-            <h2 className="text-2xl font-semibold group-hover:text-blue-600">{data.title}</h2>
-            <p className="text-gray-500 hover:text-blue-600">{data.company}</p>
+            <h2 className="text-2xl font-semibold group-hover:text-blue-600">{data.jobName}</h2>
+            <p className="text-gray-500 hover:text-blue-600">{data.companyName}</p>
           </div>
         </div>
         <div className="text-gray-600 p-2">
           <p className="flex items-center gap-2"><IoLocationOutline />{data.location}</p>
-          <p className="flex items-center gap-2"><IoTodayOutline />Updated On: {data.updatedOn}</p>
+          <p className="flex items-center gap-2"><IoTodayOutline />Updated On: {data.createdAt}</p>
           <p className="flex items-center gap-2"><IoGlobeOutline />Official website: {data.updatedOn}</p>
         </div>
       </div>
