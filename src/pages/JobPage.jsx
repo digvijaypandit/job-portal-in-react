@@ -1,98 +1,112 @@
-import { useState, useEffect } from "react";
-import Sidebar from "../components/job/Sidebar";
-import Navbar from "../components/comman/Navbar";
-import FilterBar from "../components/job/FilterBar";
-import axios from "axios"; 
-import JobListing from "../components/job/JobListing";
+import React, { useEffect, useState, useCallback } from 'react';
+import axios from 'axios';
+import debounce from 'lodash.debounce';
+import Navbar from '../components/comman/Navbar';
+import FilterBar from '../components/job/FilterBar';
+import JobList from '../components/job/jobList';
+import Job from '../components/job/jobPage';
 
 const JobPage = () => {
   const [jobs, setJobs] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedJobId, setSelectedJobId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [filters, setFilters] = useState({
-    location: "",
-    workType: "",
-    category: "",
-    salary: "",
-    postDate: "",
+    tag: '',
+    location: '',
+    workType: '',
+    salary: '',
+    postDate: '',
   });
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  const debouncedSetSearchQuery = useCallback(
+    debounce((value) => {
+      setSearchQuery(value);
+    }, 300),
+    []
+  );
 
-  // Fetch jobs from API based on the search query
-  const fetchJobs = async (query) => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/job", {
-        params: { jobName: query }, // You can send category or jobName
-      });
-      console.log(response.data.jobs)
-      setJobs(response.data.jobs);
-      setFilteredJobs(response.data.jobs); // Initially, display all jobs
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    }
-  };
-
-  // Handle search input change
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    fetchJobs(e.target.value); // Fetch jobs on each input change
+    const value = e.target.value;
+    setSearchInput(value);
+    debouncedSetSearchQuery(value);
   };
 
-  // Filter jobs based on selected filters
-  const applyFilters = () => {
-    let result = [...jobs];
-
-    // Apply filters
-    if (filters.location) {
-      result = result.filter((job) => job.location === filters.location);
-    }
-    if (filters.workType) {
-      result = result.filter((job) => job.workType === filters.workType);
-    }
-    if (filters.category) {
-      result = result.filter((job) =>
-        job.tags.includes(filters.category)
-      );
-    }
-    if (filters.salary) {
-      // Apply salary filter logic if needed
-    }
-    if (filters.postDate) {
-      // Apply post date filter logic if needed
-    }
-
-    setFilteredJobs(result);
-  };
-
-  // Trigger filter application when filters chang
   useEffect(() => {
-    applyFilters();
-  }, [filters, jobs]);
+    const fetchJobs = async () => {
+      try {
+        const queryParams = new URLSearchParams();
+
+        if (searchQuery) queryParams.append('jobName', searchQuery);
+        if (filters.tag) queryParams.append('category', filters.tag);
+
+        const response = await axios.get(`http://localhost:5000/api/job/?${queryParams.toString()}`);
+        let filteredJobs = response.data.jobs || [];
+
+        // Filter post date (client-side)
+        if (filters.postDate) {
+          const now = new Date();
+          filteredJobs = filteredJobs.filter((job) => {
+            const createdAt = new Date(job.createdAt);
+            const diffInHours = (now - createdAt) / (1000 * 60 * 60);
+            if (filters.postDate === '24 Hours') return diffInHours <= 24;
+            if (filters.postDate === 'Past Week') return diffInHours <= 24 * 7;
+            if (filters.postDate === 'Past Month') return diffInHours <= 24 * 30;
+            return true;
+          });
+        }
+
+        // Salary sorting (client-side)
+        if (filters.salary === 'Low to High') {
+          filteredJobs.sort((a, b) => Number(a.salary) - Number(b.salary));
+        } else if (filters.salary === 'High to Low') {
+          filteredJobs.sort((a, b) => Number(b.salary) - Number(a.salary));
+        }
+
+        setJobs(filteredJobs);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    fetchJobs();
+  }, [searchQuery, filters]);
+
+  // Extract dynamic filters from job data
+  const locations = [...new Set(jobs.map(job => job.location))];
+  const workTypes = [...new Set(jobs.map(job => job.workType))];
+  const tags = [
+    ...new Set(
+      jobs.flatMap(job => {
+        try {
+          const parsed = JSON.parse(job.tags[0]);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      })
+    )
+  ];
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-100">
+    <div className="h-screen overflow-hidden">
       <Navbar />
-      <div className="mt-16">
+      <div className="pt-20">
         <FilterBar
-          searchQuery={searchQuery}
+          searchQuery={searchInput}
           onSearchChange={handleSearchChange}
           setFilters={setFilters}
+          locations={locations}
+          workTypes={workTypes}
+          tags={tags}
         />
-      </div>
-      <div className="flex h-full">
-        <Sidebar
-          jobs={filteredJobs}
-          selectedJobId={selectedJobId}
-          setSelectedJobId={setSelectedJobId}
-        />
-        <JobListing selectedJobId={"680efeeb5d480995f1195916"} />
+        <div className="flex h-screen overflow-hidden">
+          <div className="w-1/3 border-r overflow-y-auto">
+            <JobList jobs={jobs} />
+          </div>
+          <div className="w-2/3 overflow-y-auto">
+            <Job />
+          </div>
+        </div>
       </div>
     </div>
   );

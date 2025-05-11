@@ -1,5 +1,6 @@
+import React from 'react';
 
-const FilterBar = ({ searchQuery, onSearchChange, setFilters }) => {
+const FilterBar = ({ searchQuery, onSearchChange, setFilters, locations = [], workTypes = [], tags = [] }) => {
   const handleFilterChange = (e, filterType) => {
     setFilters((prev) => ({
       ...prev,
@@ -9,9 +10,8 @@ const FilterBar = ({ searchQuery, onSearchChange, setFilters }) => {
 
   return (
     <div className="w-full space-y-4">
-      {/* Main Filter Bar */}
-      <div className="flex flex-wrap items-center gap-3 bg-white p-4 shadow-lg rounded-xl">
-        {/* Search Box */}
+      <div className="flex flex-wrap items-center relative -top-4 gap-3 bg-white p-2 rounded-xl">
+        {/* Search */}
         <div className="flex-1 min-w-[200px]">
           <input
             type="text"
@@ -22,46 +22,69 @@ const FilterBar = ({ searchQuery, onSearchChange, setFilters }) => {
           />
         </div>
 
-        {/* Dropdown Filters */}
-        {[{
-          value: "", // Add dynamic value from filters
-          onChange: (e) => handleFilterChange(e, "location"),
-          options: ["New York", "San Francisco", "Los Angeles", "Chicago", "Remote"],
-          label: "Location"
-        }, {
-          value: "",
-          onChange: (e) => handleFilterChange(e, "workType"),
-          options: ["Office", "Remote", "Hybrid"],
-          label: "Work Type"
-        }, {
-          value: "",
-          onChange: (e) => handleFilterChange(e, "category"),
-          options: ["Software Development", "Marketing", "Design", "Product Management", "Sales"],
-          label: "Category"
-        }, {
-          value: "",
-          onChange: (e) => handleFilterChange(e, "salary"),
-          options: ["Low to High", "High to Low"],
-          label: "Salary"
-        }, {
-          value: "",
-          onChange: (e) => handleFilterChange(e, "postDate"),
-          options: ["24 Hours", "Past Week", "Past Month"],
-          label: "Post Date"
-        }].map(({ value, onChange, options, label }, idx) => (
-          <div key={idx} className="relative min-w-[150px]">
-            <select
-              value={value}
-              onChange={onChange}
-              className="w-full border border-gray-300 px-4 py-2 rounded-full text-gray-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            >
-              <option value="">{label}</option>
-              {options.map((opt, i) => (
-                <option key={i} value={opt}>{opt}</option>
-              ))}
-            </select>
-          </div>
-        ))}
+        {/* Location Filter */}
+        <div className="relative min-w-[150px]">
+          <select
+            onChange={(e) => handleFilterChange(e, 'location')}
+            className="w-full border border-gray-300 px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="">Location</option>
+            {locations.map((loc, i) => (
+              <option key={i} value={loc}>{loc}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Work Type Filter */}
+        <div className="relative min-w-[150px]">
+          <select
+            onChange={(e) => handleFilterChange(e, 'workType')}
+            className="w-full border border-gray-300 px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="">Work Type</option>
+            {workTypes.map((type, i) => (
+              <option key={i} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Tags Filter */}
+        <div className="relative min-w-[150px]">
+          <select
+            onChange={(e) => handleFilterChange(e, 'tag')}
+            className="w-full border border-gray-300 px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="">Tags</option>
+            {tags.map((tag, i) => (
+              <option key={i} value={tag}>{tag}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Salary Sort */}
+        <div className="relative min-w-[150px]">
+          <select
+            onChange={(e) => handleFilterChange(e, 'salary')}
+            className="w-full border border-gray-300 px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="">Sort by Salary</option>
+            <option value="Low to High">Low to High</option>
+            <option value="High to Low">High to Low</option>
+          </select>
+        </div>
+
+        {/* Post Date Filter */}
+        <div className="relative min-w-[150px]">
+          <select
+            onChange={(e) => handleFilterChange(e, 'postDate')}
+            className="w-full border border-gray-300 px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          >
+            <option value="">Posted Within</option>
+            <option value="24 Hours">Last 24 Hours</option>
+            <option value="Past Week">Past Week</option>
+            <option value="Past Month">Past Month</option>
+          </select>
+        </div>
       </div>
     </div>
   );
