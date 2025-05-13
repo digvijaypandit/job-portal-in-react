@@ -18,11 +18,12 @@ import ApplicantProfile from "./pages/ApplicantProfile";
 import EmployerDashboard from "./pages/EmployerDashboard";
 import PostJobForm from "./pages/PostJobPage";
 import ManageJobs from "./pages/ManageJobs";
-import EditJob from "./pages/EditJob";
+import ViewApplications from "./pages/ViewApplications";
 import EmployerProfile from "./pages/EmployerProfile";
 import EmployerHome from "./pages/EmployerHome";
 import RegistrationPage from "./components/auth/Registration";
 import Unauthorized from "./feature/Unauthorized";
+import EditJobForm from "./pages/EditJobFrom";
 
 // Page Transition Animation Variants
 const pageVariants = {
@@ -70,8 +71,9 @@ const AnimatedRoutes = () => {
           <Route path="/employer/home" element={<EmployerHome />} />
           <Route path="/employer/dashboard" element={<EmployerDashboard />} />
           <Route path="/employer/post-job" element={<PostJobForm />} />
+          <Route path="/employer/applications" element={<ViewApplications />} />
           <Route path="/employer/manage-jobs" element={<ManageJobs />} />
-          <Route path="/employer/edit-job" element={<EditJob />} />
+          <Route path="/employer/manage-jobs/edit/:id" element={<EditJobForm />} />
           <Route path="/employer/profile" element={<EmployerProfile />} />
         </Route>
 

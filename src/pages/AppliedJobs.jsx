@@ -4,6 +4,8 @@ import Navbar from '../components/comman/Navbar';
 import Footer from '../components/comman/footer';
 import { FaSearch, FaFilter, FaSort, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const statusColors = {
   'Under Review': 'bg-yellow-100 text-yellow-700 border-yellow-500',
@@ -22,38 +24,57 @@ const AppliedJobs = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const token = localStorage.getItem("token");
 
-  // Fetch jobs from the API
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/application/user/applied',
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-        const formattedJobs = res.data.map((item, index) => ({
-          id: index,
-          title: item.job.jobName,
-          company: item.job.companyName,
-          logo: `http://localhost:5000${item.job.companyLogo}`,
-          appliedDate: item.applicationDate.split('T')[0],
-          status: item.status,
-          description: `You applied for the ${item.job.jobName} role at ${item.job.companyName}. Status: ${item.status}.`,
-        }));
+        const res = await axios.get('http://localhost:5000/api/application/user/applied', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const formattedJobs = res.data
+          .filter(item => item.job)
+          .map((item) => ({
+            id: item.job._id,
+            title: item.job.jobName,
+            company: item.job.companyName,
+            logo: `http://localhost:5000${item.job.companyLogo}`,
+            appliedDate: item.applicationDate.split('T')[0],
+            status: item.status,
+            description: `You applied for the ${item.job.jobName} role at ${item.job.companyName}. Status: ${item.status}.`,
+          }));
+
         setJobs(formattedJobs);
       } catch (error) {
         console.error('Failed to fetch jobs', error);
+        toast.error('Failed to fetch jobs');
       }
     };
 
     fetchJobs();
-  }, []);
+  }, [token]);
+
+  const handleDeleteJob = async (jobId) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/application/jobs/${jobId}/apply`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setJobs(jobs.filter(job => job.id !== jobId));
+      toast.success('Application withdrawn successfully.');
+    } catch (error) {
+      console.error('Failed to withdraw application', error);
+      toast.error('Error withdrawing application.');
+    }
+  };
 
   const filteredJobs = jobs
-    .filter(job =>
-      (job.title.toLowerCase().includes(search.toLowerCase()) ||
-        job.company.toLowerCase().includes(search.toLowerCase())) &&
-      (statusFilter ? job.status === statusFilter : true)
-    )
+    .filter(job => {
+      return (
+        (job.title.toLowerCase().includes(search.toLowerCase()) ||
+          job.company.toLowerCase().includes(search.toLowerCase())) &&
+        (statusFilter ? job.status === statusFilter : true)
+      );
+    })
     .sort((a, b) =>
       sortOrder === 'newest'
         ? new Date(b.appliedDate) - new Date(a.appliedDate)
@@ -121,9 +142,21 @@ const AppliedJobs = () => {
                   <p className="text-gray-500 text-sm">Applied on: {job.appliedDate}</p>
                 </div>
               </div>
-              <span className={`inline-block px-3 py-1 mt-3 text-sm font-semibold rounded-full`}>
+              <span className="inline-block px-3 py-1 mt-3 text-sm font-semibold rounded-full">
                 {job.status}
               </span>
+
+              {job.status && job.status.toLowerCase() === 'under review' && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteJob(job.id);
+                  }}
+                  className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                >
+                  Withdraw Application
+                </button>
+              )}
             </motion.div>
           ))}
         </div>
@@ -140,11 +173,23 @@ const AppliedJobs = () => {
               <p className="text-gray-600">{selectedJob.company}</p>
               <p className="text-gray-500">Applied on: {selectedJob.appliedDate}</p>
               <p className="mt-4">{selectedJob.description}</p>
+              {selectedJob.status?.trim().toLowerCase() === 'pending' && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteJob(selectedJob.id);
+                  }}
+                  className="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                >
+                  Withdraw Application
+                </button>
+              )}
             </motion.div>
           </div>
         )}
       </div>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 };

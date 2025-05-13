@@ -26,30 +26,34 @@ const JobHeader = ({ job }) => {
         const res = await axios.get('http://localhost:5000/api/savedJob/', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const savedJobIds = res.data.map(item => item.job._id);
+        const savedJobIds = res.data
+          .filter(item => item.job !== null)
+          .map(item => item.job._id);
         setSavedJobs(savedJobIds);
         setIsSaved(savedJobIds.includes(job._id));
       } catch (err) {
         console.error('Error fetching saved jobs:', err.response?.data || err.message);
       }
     };
-  
+
     const fetchApplications = async () => {
       if (!token) return;
       try {
         const res = await axios.get('http://localhost:5000/api/application/user/applied', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const appliedJobIds = res.data.map(app => app.job._id);
+        const appliedJobIds = res.data
+          .filter(app => app.job !== null)
+          .map(app => app.job._id);
         setHasApplied(appliedJobIds.includes(job._id));
       } catch (err) {
         console.error('Error fetching applied jobs:', err.response?.data || err.message);
       }
     };
-  
+
     fetchSavedJobs();
     fetchApplications();
-  }, [job._id, token]);  
+  }, [job._id, token]);
 
   const toggleSaveJob = async () => {
     if (!token) {

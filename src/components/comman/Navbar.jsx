@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/authSlice";
 import { FaSearch, FaBell, FaCommentDots, FaBars, FaTimes } from "react-icons/fa";
@@ -21,7 +21,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      navigate("/"); // Redirect to home after logout
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -37,12 +37,11 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Logic for logo navigation based on roles
   const getHomeLink = () => {
     const storedRoles = JSON.parse(localStorage.getItem("roles"));
-    if (storedRoles?.includes("ROLE_EMPLOYEE")) return "/applicant/home";
-    if (storedRoles?.includes("ROLE_EMPLOYER")) return "/employer/home";
-    return "/"; // Default home if no role found
+    if (storedRoles?.includes("Applicant")) return "/applicant/home";
+    if (storedRoles?.includes("Employer")) return "/employer/home";
+    return "/";
   };
 
   return (
@@ -61,19 +60,20 @@ const Navbar = () => {
             <>
               {isApplicant && (
                 <>
-                  <li><Link to="/applicant/home">Home</Link></li>
-                  <li><Link to="/applicant/jobs">Jobs</Link></li>
-                  <li><Link to="/applicant/dashboard">Dashboard</Link></li>
-                  <li><Link to="/applicant/saved-jobs">Saved Jobs</Link></li>
-                  <li><Link to="/applicant/applied-jobs">Applied Jobs</Link></li>
+                  <li><NavLink to="/applicant/home"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Home</NavLink></li>
+                  <li><NavLink to="/applicant/jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Jobs</NavLink></li>
+                  <li><NavLink to="/applicant/dashboard"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Dashboard</NavLink></li>
+                  <li><NavLink to="/applicant/saved-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Saved Jobs</NavLink></li>
+                  <li><NavLink to="/applicant/applied-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Applied Jobs</NavLink></li>
                 </>
               )}
               {isEmployer && (
                 <>
-                  <li><Link to="/employer/home">Home</Link></li>
-                  <li><Link to="/employer/dashboard">Dashboard</Link></li>
-                  <li><Link to="/employer/post-job">Post Job</Link></li>
-                  <li><Link to="/employer/manage-jobs">Manage Jobs</Link></li>
+                  <li><NavLink to="/employer/home"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Home</NavLink></li>
+                  <li><NavLink to="/employer/dashboard"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Dashboard</NavLink></li>
+                  <li><NavLink to="/employer/post-job"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Post Job</NavLink></li>
+                  <li><NavLink to="/employer/manage-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Manage Jobs</NavLink></li>
+                  <li><NavLink to="/employer/applications"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>View Applications</NavLink></li>
                 </>
               )}
             </>
@@ -163,6 +163,7 @@ const Navbar = () => {
                   <li><Link to="/employer/dashboard">Dashboard</Link></li>
                   <li><Link to="/employer/post-job">Post Job</Link></li>
                   <li><Link to="/employer/manage-jobs">Manage Jobs</Link></li>
+                  <li><Link to="/employer/applications">View Applications</Link></li>
                 </>
               )}
               <li><button onClick={handleLogout} className="text-left w-full hover:text-red-600">Logout</button></li>

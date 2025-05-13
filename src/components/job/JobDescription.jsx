@@ -1,13 +1,14 @@
 import React from 'react';
 
 const JobDescription = ({ job }) => {
-  const responsibilities = Array.isArray(job.keyResponsibilities) && job.keyResponsibilities.length > 0
-    ? JSON.parse(job.keyResponsibilities[0])
-    : [];
+  const responsibilities = Array.isArray(job.keyResponsibilities)
+  ? job.keyResponsibilities
+  : [];
 
-  const skills = Array.isArray(job.skills) && job.skills.length > 0
-    ? JSON.parse(job.skills[0])
-    : [];
+  const skills = Array.isArray(job.skills)
+  ? job.skills
+  : [];
+
 
   return (
     <div className="p-6 bg-white rounded-2xl shadow space-y-6 leading-relaxed text-gray-800">
