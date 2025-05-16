@@ -14,7 +14,7 @@ const resources = [
     name: 'Mock Interviews',
     description: 'Prepare for real job interviews',
     image: '/images/interview.png',
-    link: '/mock-interviews',
+    link: '/applicant/mockInterview-home',
     bgColor: 'bg-green-200',
   },
   {
@@ -54,7 +54,7 @@ const ResourcesSection = () => {
         {resources.map((resource, index) => (
           <motion.div
             key={index}
-            whileHover={{ scale: 1.03, y: -5 }} // Lift up & scale effect
+            whileHover={{ scale: 1.03, y: -5 }}
             transition={{ type: 'spring', stiffness: 200 }}
           >
             <Link to={resource.link} className="block">

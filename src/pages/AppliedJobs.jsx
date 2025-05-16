@@ -145,18 +145,6 @@ const AppliedJobs = () => {
               <span className="inline-block px-3 py-1 mt-3 text-sm font-semibold rounded-full">
                 {job.status}
               </span>
-
-              {job.status && job.status.toLowerCase() === 'under review' && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteJob(job.id);
-                  }}
-                  className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                >
-                  Withdraw Application
-                </button>
-              )}
             </motion.div>
           ))}
         </div>
@@ -179,7 +167,7 @@ const AppliedJobs = () => {
                     e.stopPropagation();
                     handleDeleteJob(selectedJob.id);
                   }}
-                  className="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                  className="mt-6 px-6 py-2 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-600 transition-colors"
                 >
                   Withdraw Application
                 </button>

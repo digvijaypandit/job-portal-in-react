@@ -140,7 +140,7 @@ const Profile = () => {
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                             <div className="flex items-center space-x-6">
                                 <img
-                                    src={`http://localhost:5000${profile.photo}`}
+                                    src={`http://localhost:5000/${profile.photo?.replace(/^\/+/, '')}`}
                                     alt="Profile"
                                     className="w-24 h-24 rounded-full border-4 border-blue-500 shadow-md object-cover"
                                 />

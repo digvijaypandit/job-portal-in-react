@@ -4,10 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/comman/Navbar";
 import Footer from "../components/comman/footer";
 import { FaSearch, FaSort, FaTimes, FaTrash, FaMapMarkerAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:5000/api/savedJob";
 
 const SavedJobs = () => {
+  const navigate = useNavigate();
   const [savedJobs, setSavedJobs] = useState([]);
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("newest");
@@ -99,7 +101,7 @@ const SavedJobs = () => {
                 >
                   <div className="flex items-center space-x-4">
                     <img
-                      src={`http://localhost:5000${job.companyLogo}`}
+                      src={`http://localhost:5000/${job.companyLogo?.replace(/^\/+/, '')}`}
                       alt={`Logo of ${job.companyName}`}
                       className="w-12 h-12 object-contain"
                     />
@@ -117,7 +119,13 @@ const SavedJobs = () => {
                     </div>
                   </div>
                   <div className="flex justify-between mt-4">
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/applicant/jobs?jobId=${job._id}`);
+                      }}
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition cursor-pointer"
+                    >
                       Apply Now
                     </button>
                     <button
@@ -125,7 +133,7 @@ const SavedJobs = () => {
                         e.stopPropagation();
                         removeJob(job._id);
                       }}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center"
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition flex items-center cursor-pointer"
                     >
                       <FaTrash className="mr-2" /> Remove
                     </button>
@@ -159,7 +167,7 @@ const SavedJobs = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
-                  className="absolute top-2 right-2 text-gray-600"
+                  className="absolute top-2 right-2 cursor-pointer text-gray-600"
                   onClick={() => setSelectedJob(null)}
                 >
                   <FaTimes className="text-2xl" />

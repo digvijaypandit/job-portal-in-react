@@ -65,6 +65,10 @@ const Navbar = () => {
                   <li><NavLink to="/applicant/dashboard"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Dashboard</NavLink></li>
                   <li><NavLink to="/applicant/saved-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Saved Jobs</NavLink></li>
                   <li><NavLink to="/applicant/applied-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Applied Jobs</NavLink></li>
+                  <li><NavLink to="/applicant/mockInterview-home"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Mock InterviewHome</NavLink></li>
+                  {/* <li><NavLink to="/applicant/interview-form"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Form</NavLink></li>
+                  <li><NavLink to="/applicant/interview-page"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Page</NavLink></li>
+                  <li><NavLink to="/applicant/interview-result"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Result</NavLink></li> */}
                 </>
               )}
               {isEmployer && (

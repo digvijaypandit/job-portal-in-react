@@ -24,15 +24,16 @@ import EmployerHome from "./pages/EmployerHome";
 import RegistrationPage from "./components/auth/Registration";
 import Unauthorized from "./feature/Unauthorized";
 import EditJobForm from "./pages/EditJobFrom";
+import MockInterviewHome from "./pages/MockInterviewHome";
+import InterviewForm from "./components/AI features/Mock Interview/InterviewForm";
+import InterviewPage from "./pages/InterviewPage";
 
-// Page Transition Animation Variants
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
 };
 
-// Animated Route Wrapper
 const AnimatedPage = ({ children }) => {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
@@ -41,7 +42,6 @@ const AnimatedPage = ({ children }) => {
   );
 };
 
-// Animated Routes Component
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -64,6 +64,9 @@ const AnimatedRoutes = () => {
           <Route path="/applicant/jobs" element={<JobPage />} />
           <Route path="/applicant/applied-jobs" element={<AppliedJobs />} />
           <Route path="/applicant/profile" element={<ApplicantProfile />} />
+          <Route path="/applicant/mockInterview-home" element={<MockInterviewHome />} />
+          <Route path="/applicant/interview-form" element={<InterviewForm />} />
+          <Route path="/applicant/interview-page" element={<InterviewPage />} />\
         </Route>
 
         {/* Protected Employer Routes */}

@@ -1,13 +1,14 @@
 import React from 'react';
 
 const JobDescription = ({ job }) => {
-  const responsibilities = Array.isArray(job.keyResponsibilities)
-  ? job.keyResponsibilities
+  const responsibilities = Array.isArray(job.keyResponsibilities) && job.keyResponsibilities.length > 0
+  ? JSON.parse(job.keyResponsibilities[0])
   : [];
 
-  const skills = Array.isArray(job.skills)
-  ? job.skills
+const skills = Array.isArray(job.skills) && job.skills.length > 0
+  ? JSON.parse(job.skills[0])
   : [];
+
 
 
   return (

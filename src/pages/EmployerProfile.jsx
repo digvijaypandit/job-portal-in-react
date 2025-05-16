@@ -202,7 +202,7 @@ const EmployerProfile = () => {
                             <div className="flex flex-col sm:flex-row items-center gap-6 border-b pb-6">
                                 {profile?.photo && (
                                     <img
-                                        src={`http://localhost:5000${profile.photo}`}
+                                        src={`http://localhost:5000/${profile.photo?.replace(/^\/+/, '')}`}
                                         alt="Company Logo"
                                         className="w-24 h-24 rounded-full border shadow-md object-cover"
                                     />
