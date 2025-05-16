@@ -6,6 +6,7 @@ import { setInterviewData } from '../../../store/interviewSlice';
 
 const InterviewForm = () => {
     const userId = localStorage.getItem('userId');
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         userId: userId,
         field: '',
@@ -87,6 +88,7 @@ const InterviewForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Start loading
 
         const resolvedField = formData.field === 'Other' ? formData.customField : formData.field;
         const resolvedLanguage =
@@ -118,6 +120,8 @@ const InterviewForm = () => {
         } catch (error) {
             console.error('API call failed:', error);
             alert('Failed to start interview. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -127,7 +131,7 @@ const InterviewForm = () => {
 
     return (
         <div className="max-w-xl mx-auto mt-12 p-8 bg-white shadow-lg rounded-lg border">
-            <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Start a Mock Interview</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-blue-600">Start a new session</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
 
                 {/* Field Selection */}
@@ -166,7 +170,7 @@ const InterviewForm = () => {
                 {/* Interview Type */}
                 {formData.field && (
                     <div>
-                        <label className="block mb-2 font-semibold text-gray-700">Interview Type</label>
+                        <label className="block mb-2 font-semibold text-gray-700">Session Type</label>
                         <select
                             name="interviewType"
                             value={formData.interviewType}
@@ -247,10 +251,13 @@ const InterviewForm = () => {
 
                     <button
                         type="submit"
-                        className="px-5 py-2 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition"
+                        disabled={loading}
+                        className={`px-5 py-2 cursor-pointer font-medium rounded-md transition ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'
+                            }`}
                     >
-                        Start Interview
+                        {loading ? 'Starting...' : 'Start Session'}
                     </button>
+
                 </div>
             </form>
         </div>
