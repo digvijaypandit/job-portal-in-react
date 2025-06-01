@@ -7,7 +7,7 @@ const resources = [
     name: 'Practice Aptitude Tests',
     description: 'Sharpen your problem-solving skills',
     image: '/images/aptitude.png',
-    link: '/aptitude-tests',
+    link: '/applicant/aptitude-home',
     bgColor: 'bg-blue-200',
   },
   {

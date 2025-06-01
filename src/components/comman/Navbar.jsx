@@ -66,9 +66,8 @@ const Navbar = () => {
                   <li><NavLink to="/applicant/saved-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Saved Jobs</NavLink></li>
                   <li><NavLink to="/applicant/applied-jobs"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Applied Jobs</NavLink></li>
                   <li><NavLink to="/applicant/mockInterview-home"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Mock InterviewHome</NavLink></li>
-                  {/* <li><NavLink to="/applicant/interview-form"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Form</NavLink></li>
-                  <li><NavLink to="/applicant/interview-page"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Page</NavLink></li>
-                  <li><NavLink to="/applicant/interview-result"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Interview Result</NavLink></li> */}
+                  <li><NavLink to="/applicant/aptitude-home"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>Aptitude Test</NavLink></li>
+                  <li><NavLink to="/applicant/ai-features"className={({ isActive }) =>`transition-colors hover:text-blue-600 ${isActive ? "text-blue-600 font-semibold" : "text-gray-700"}`}>AI features</NavLink></li>
                 </>
               )}
               {isEmployer && (
@@ -93,16 +92,7 @@ const Navbar = () => {
 
         {/* Right Icons */}
         <div className="flex items-center space-x-4">
-          {/* Search Box */}
-          <div className="hidden md:flex items-center bg-gray-100 px-3 py-1 rounded-md w-48">
-            <FaSearch className="text-gray-500" />
-            <input
-              type="text"
-              placeholder="Search..."
-              className="ml-2 bg-transparent focus:outline-none w-full"
-            />
-          </div>
-
+          
           {user ? (
             <>
               <Link to="/messages" className="text-gray-700 text-xl hover:text-blue-500"><FaCommentDots /></Link>
@@ -159,6 +149,8 @@ const Navbar = () => {
                   <li><Link to="/applicant/dashboard">Dashboard</Link></li>
                   <li><Link to="/applicant/saved-jobs">Saved Jobs</Link></li>
                   <li><Link to="/applicant/applied-jobs">Applied Jobs</Link></li>
+                  <li><Link to="/applicant/ai-features">AI features</Link></li>
+
                 </>
               )}
               {isEmployer && (

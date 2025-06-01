@@ -27,6 +27,10 @@ import EditJobForm from "./pages/EditJobFrom";
 import MockInterviewHome from "./pages/MockInterviewHome";
 import InterviewForm from "./components/AI features/Mock Interview/InterviewForm";
 import InterviewPage from "./pages/InterviewPage";
+import AptitudeHome from "./pages/AptitudeHome";
+import AptitudeForm from "./components/AI features/Aptitude Test/AptitudeForm";
+import AptitudeTestPage from "./pages/AptitudeTestPage";
+import ResourcesSection from "./components/applicant/ResourcesSection";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -66,7 +70,11 @@ const AnimatedRoutes = () => {
           <Route path="/applicant/profile" element={<ApplicantProfile />} />
           <Route path="/applicant/mockInterview-home" element={<MockInterviewHome />} />
           <Route path="/applicant/interview-form" element={<InterviewForm />} />
-          <Route path="/applicant/interview-page" element={<InterviewPage />} />\
+          <Route path="/applicant/interview-page" element={<InterviewPage />} />
+          <Route path="/applicant/aptitude-home" element={<AptitudeHome />} />
+          <Route path="/applicant/aptitude-form" element={<AptitudeForm />} />
+          <Route path="/applicant/aptitude-page" element={<AptitudeTestPage />} />
+          <Route path="/applicant/ai-features" element={<ResourcesSection />} />
         </Route>
 
         {/* Protected Employer Routes */}

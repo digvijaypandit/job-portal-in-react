@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import jobsReducer from './jobsSlice'; 
 import interviewReducer from './interviewSlice';
+import aptitudeReducer from './aptitudeSlice';
 import { loadState, saveState } from '../utils/localStorage';
 
 const persistedInterviewState = loadState();
@@ -11,6 +12,7 @@ const store = configureStore({
     auth: authReducer,
     jobs: jobsReducer,
     interview: interviewReducer,
+    aptitude: aptitudeReducer,
   },
   preloadedState: {
     interview: persistedInterviewState || undefined,
