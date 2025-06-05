@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import ReactDOM from 'react-dom';
 
 // Pages & Components
 import LandingPage from "./pages/LandingPage";
@@ -31,6 +32,10 @@ import AptitudeHome from "./pages/AptitudeHome";
 import AptitudeForm from "./components/AI features/Aptitude Test/AptitudeForm";
 import AptitudeTestPage from "./pages/AptitudeTestPage";
 import ResourcesSection from "./components/applicant/ResourcesSection";
+import MentorshipPage from "./pages/MentorshipPage";
+import MindMap from "./pages/MindMap";
+import QuizHomePage from "./pages/QuizHomePage";
+import QuizPage from "./pages/QuizPage";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -74,6 +79,10 @@ const AnimatedRoutes = () => {
           <Route path="/applicant/aptitude-home" element={<AptitudeHome />} />
           <Route path="/applicant/aptitude-form" element={<AptitudeForm />} />
           <Route path="/applicant/aptitude-page" element={<AptitudeTestPage />} />
+          <Route path="/applicant/mentorship" element={<MentorshipPage />} />
+          <Route path="/learning-roadmaps" element={<MindMap />} />
+          <Route path="/applicant/quizzes" element={<QuizHomePage />} />
+          <Route path="/applicant/quiz/:quizId" element={<QuizPage />} />
           <Route path="/applicant/ai-features" element={<ResourcesSection />} />
         </Route>
 

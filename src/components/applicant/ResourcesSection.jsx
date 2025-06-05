@@ -28,7 +28,7 @@ const resources = [
     name: 'Quizzes',
     description: 'Test your knowledge with interactive quizzes and boost your learning',
     image: '/images/quiz.png',
-    link: '/ats-checker',
+    link: '/applicant/quizzes',
     bgColor: 'bg-[#ffc191]',
   },
   {
@@ -42,7 +42,7 @@ const resources = [
     name: 'AI-Powered Mentorships',
     description: 'Get personalized career guidance and skill-building tips from AI mentors',
     image: '/images/mentorships.png',
-    link: '/learning-roadmaps',
+    link: '/applicant/mentorship',
     bgColor: 'bg-[#ffb0cc]',
   }
 ];

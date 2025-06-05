@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import jobsReducer from './jobsSlice'; 
 import interviewReducer from './interviewSlice';
 import aptitudeReducer from './aptitudeSlice';
+import quizReducer from "./quizSlice";
 import { loadState, saveState } from '../utils/localStorage';
 
 const persistedInterviewState = loadState();
@@ -13,6 +14,7 @@ const store = configureStore({
     jobs: jobsReducer,
     interview: interviewReducer,
     aptitude: aptitudeReducer,
+    quiz: quizReducer,
   },
   preloadedState: {
     interview: persistedInterviewState || undefined,
