@@ -82,7 +82,8 @@ const AnimatedRoutes = () => {
           <Route path="/applicant/mentorship" element={<MentorshipPage />} />
           <Route path="/learning-roadmaps" element={<MindMap />} />
           <Route path="/applicant/quizzes" element={<QuizHomePage />} />
-          <Route path="/applicant/quiz/:quizId" element={<QuizPage />} />
+          <Route path="/applicant/quiz/global" element={<QuizPage />} />
+          <Route path="/applicant/quiz/skill" element={<QuizPage />} />
           <Route path="/applicant/ai-features" element={<ResourcesSection />} />
         </Route>
 

@@ -1,97 +1,92 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { submitSkillQuiz, fetchSkillQuestions } from "../store/quizSlice";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  startGlobalQuiz,
+  startSkillQuiz,
+  fetchQuestions,
+  selectCurrentQuestion,
+  selectTotalQuestions,
+  selectAnswers,
+  answerQuestion,
+  submitQuiz,
+} from '../store/quizSlice';
+import Leaderboard from '../components/AI features/Quiz/Leaderboard';
 
-const SkillQuizPage = () => {
+const QuizPage = () => {
+  const { type } = useParams(); // 'global' or 'background'
   const dispatch = useDispatch();
-  const { quizId } = useParams();
-
-  const {
-    skillQuestions,
-    totalQuestions,
-    currentQuestionIndex,
-    loading,
-  } = useSelector((state) => state.quiz);
-
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [startedAt, setStartedAt] = useState(null);
+  const quiz = useSelector((s) => s.quiz);
+  const currentQ = useSelector(selectCurrentQuestion);
+  const totalQ = useSelector(selectTotalQuestions);
+  const answers = useSelector(selectAnswers);
 
   useEffect(() => {
-    dispatch(fetchSkillQuestions(quizId));
-    setStartedAt(new Date().toISOString());
-  }, [quizId, dispatch]);
+    const userId = localStorage.getItem('userId') || '';
+    if (type === 'global') dispatch(startGlobalQuiz());
+    else dispatch(startSkillQuiz({ userId }));
+  }, [type, dispatch]);
 
-  const handleOptionSelect = (index, option) => {
-    const updated = [...selectedOptions];
-    updated[index] = option;
-    setSelectedOptions(updated);
+  useEffect(() => {
+    if (quiz.quizId) {
+      dispatch(fetchQuestions({ quizId: quiz.quizId }));
+    }
+  }, [quiz.quizId, dispatch]);
+
+  const handleAnswer = (opt) => {
+    dispatch(answerQuestion({ index: currentQ.index, answer: opt }));
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < totalQuestions - 1) {
-      dispatch({ type: "quiz/nextQuestion" });
+    if (quiz.currentIndex + 1 < totalQ) {
+      dispatch(answerQuestion({ move: 1 }));
+    } else {
+      dispatch(submitQuiz({ quizId: quiz.quizId, answers })).then(() =>
+        alert('Quiz submitted!')
+      );
     }
   };
 
-  const handleSubmit = () => {
-    dispatch(
-      submitSkillQuiz({
-        quizId,
-        startedAt,
-        answers: selectedOptions,
-      })
-    );
-  };
-
-  if (loading) return <p>Loading quiz...</p>;
-
-  const currentQ = skillQuestions[currentQuestionIndex];
+  if (quiz.loading)
+    return <p className="text-center mt-20">Loading quiz...</p>;
+  if (!currentQ)
+    return <p className="text-center mt-20">No questions found.</p>;
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">
-        Question {currentQuestionIndex + 1} of {totalQuestions}
-      </h1>
-
-      <div className="bg-white p-4 rounded shadow">
-        <p className="mb-4">{currentQ?.question}</p>
-        {currentQ?.options?.map((opt, i) => (
-          <div key={i} className="mb-2">
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                name={`question-${currentQuestionIndex}`}
-                value={opt}
-                checked={selectedOptions[currentQuestionIndex] === opt}
-                onChange={() => handleOptionSelect(currentQuestionIndex, opt)}
-                className="mr-2"
-              />
+    <div className="max-w-2xl mx-auto py-8 space-y-8">
+      <h2 className="text-2xl font-bold text-center">
+        {quiz.topic} ({quiz.category})
+      </h2>
+      <div className="bg-white shadow-lg p-6 rounded-md">
+        <p className="font-semibold mb-4">{`${currentQ.index + 1} / ${totalQ}: ${
+          currentQ.question
+        }`}</p>
+        <div className="flex flex-col gap-3">
+          {currentQ.options.map((opt) => (
+            <button
+              key={opt}
+              onClick={() => handleAnswer(opt)}
+              className={`py-2 px-4 border rounded transition ${
+                answers[currentQ.index] === opt
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
               {opt}
-            </label>
-          </div>
-        ))}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={handleNext}
+          className="mt-6 w-full py-3 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+        >
+          {quiz.currentIndex + 1 === totalQ ? 'Submit Quiz' : 'Next Question'}
+        </button>
       </div>
 
-      <div className="flex justify-between mt-4">
-        {currentQuestionIndex < totalQuestions - 1 ? (
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={handleNext}
-          >
-            Next
-          </button>
-        ) : (
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded"
-            onClick={handleSubmit}
-          >
-            Submit Quiz
-          </button>
-        )}
-      </div>
+      <Leaderboard type={type === 'global' ? 'GLOBAL' : 'BACKGROUND'} week={quiz.scheduledForWeek || quiz.week} />
     </div>
   );
 };
 
-export default SkillQuizPage;
+export default QuizPage;

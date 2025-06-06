@@ -1,42 +1,46 @@
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSkillQuizFlow, fetchGlobalQuiz } from "../store/quizSlice";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { clearQuiz } from '../store/quizSlice';
+import Leaderboard from '../components/AI features/Quiz/Leaderboard';
 
-const Landing = () => {
-  const dispatch = useDispatch();
+const QuizHomePage = () => {
   const navigate = useNavigate();
-  const { quizData, status } = useSelector((state) => state.quiz);
+  const dispatch = useDispatch();
 
-  const handleJoin = async (type) => {
-    const action = type === "skill" ? fetchSkillQuizFlow() : fetchGlobalQuiz();
-    const res = await dispatch(action);
-    console.log(res);
-    if (res.meta.requestStatus === "fulfilled") {
-      const quizId = res.payload.quizId;
-      navigate(`/applicant/quiz/${quizId}`);
-    }
+  const handleJoin = (type) => {
+    dispatch(clearQuiz());
+    navigate(`/applicant/quiz/${type.toLowerCase()}`);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">Choose Quiz Type</h1>
-      <div className="flex gap-4">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold mb-8">Welcome to the Quiz Hub</h1>
+      <div className="flex gap-6 mb-12">
         <button
-          onClick={() => handleJoin("skill")}
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+          onClick={() => handleJoin('GLOBAL')}
+          className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
         >
-          Skill-Based Quiz
+          Join Global Quiz
         </button>
         <button
-          onClick={() => handleJoin("global")}
-          className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600"
+          onClick={() => handleJoin('skill')}
+          className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
         >
-          Global Quiz
+          Join Skill-Based Quiz
         </button>
       </div>
-      {status === "loading" && <p className="mt-4">Loading questions...</p>}
+      <Leaderboard type="BACKGROUND" week={new Date().toISOString().slice(0, 8) + `W${getWeekNum()}`} />
     </div>
   );
 };
 
-export default Landing;
+// Helper to compute current ISO week
+function getWeekNum() {
+  const now = new Date();
+  const onejan = new Date(now.getFullYear(), 0, 1);
+  const week = Math.ceil((((now - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+  return week < 10 ? `0${week}` : week;
+}
+
+export default QuizHomePage;
