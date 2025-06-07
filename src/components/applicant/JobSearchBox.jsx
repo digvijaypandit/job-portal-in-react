@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSearchQuery } from '../../store/searchSlice';
 
 const JobSearchBox = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [localQuery, setLocalQuery] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (searchQuery.trim()) {
-      console.log('Searching for:', searchQuery);
-      // You can replace this with actual search logic or navigation
+    if (localQuery.trim()) {
+      dispatch(setSearchQuery(localQuery));
+      navigate('/applicant/jobs');
     }
   };
 
@@ -17,16 +22,13 @@ const JobSearchBox = () => {
   return (
     <section className="flex mt-10">
       <div className="relative w-full max-w-3xl">
-        <label htmlFor="job-search" className="sr-only">
-          Search for jobs
-        </label>
+        <label htmlFor="job-search" className="sr-only">Search for jobs</label>
         <input
           id="job-search"
           type="text"
-          aria-label="Search for jobs"
           placeholder="Search for jobs by title, company, or keyword..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={localQuery}
+          onChange={(e) => setLocalQuery(e.target.value)}
           onKeyPress={handleKeyPress}
           className="w-full p-4 pr-28 border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         />

@@ -5,6 +5,7 @@ import interviewReducer from './interviewSlice';
 import aptitudeReducer from './aptitudeSlice';
 import quizReducer from "./quizSlice";
 import leaderboardReducer from './leaderboardSlice';
+import searchReducer from './searchSlice';
 import { loadState, saveState } from '../utils/localStorage';
 
 const persistedInterviewState = loadState();
@@ -17,6 +18,7 @@ const store = configureStore({
     aptitude: aptitudeReducer,
     quiz: quizReducer,
     leaderboard: leaderboardReducer,
+    search: searchReducer,
   },
   preloadedState: {
     interview: persistedInterviewState || undefined,

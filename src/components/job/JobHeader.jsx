@@ -185,7 +185,7 @@ const JobHeader = ({ job }) => {
           <FaUserFriends className="text-blue-600 text-2xl" />
           <div>
             <p className="text-sm text-gray-500">Applied</p>
-            <p className="text-lg font-semibold text-gray-800">3</p>
+            <p className="text-lg font-semibold text-gray-800">{job.applicantCount}</p>
           </div>
         </div>
         <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-xl">

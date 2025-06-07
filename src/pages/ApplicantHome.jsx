@@ -1,79 +1,76 @@
-import React from 'react'
-import Navbar from '../components/comman/Navbar'
-import JobSearchBox from '../components/applicant/JobSearchBox'
-import JobRecommendations from '../components/applicant/JobRecommendations'
-import ResourcesSection from '../components/applicant/ResourcesSection'
-import Footer from '../components/comman/footer'
-import { Typewriter } from 'react-simple-typewriter'
-import JobCategory from '../components/job/JobCategory'
+import React, { useEffect, useState } from 'react';
+import Navbar from '../components/comman/Navbar';
+import JobSearchBox from '../components/applicant/JobSearchBox';
+import JobRecommendations from '../components/applicant/JobRecommendations';
+import ResourcesSection from '../components/applicant/ResourcesSection';
+import Footer from '../components/comman/footer';
+import { Typewriter } from 'react-simple-typewriter';
+import JobCategory from '../components/job/JobCategory';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ApplicantHome() {
-  const jobData = [
-    {
-      job_title: "Front End Developer",
-      company: "Tech4nexgen Business Solutions",
-      location: "In Office",
-      applied: 8250,
-      time_left: "9 months left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "React Developer",
-      company: "Unnanu Enterprise AI Search",
-      location: "In Office",
-      applied: 442,
-      time_left: "2 days left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "Frontend Developer",
-      company: "Unnanu Enterprise AI Search",
-      location: "In Office",
-      applied: 1024,
-      time_left: "23 hours left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "Fullstack Developer",
-      company: "Altair",
-      location: "In Office",
-      applied: "4,431 Views",
-      time_left: "5 days left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "UI/UX Designer",
-      company: "DesignCorp",
-      location: "Remote",
-      applied: 567,
-      time_left: "14 days left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "Backend Developer",
-      company: "CloudSoft Solutions",
-      location: "Hybrid",
-      applied: 980,
-      time_left: "1 month left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "Data Scientist",
-      company: "AI Analytics Hub",
-      location: "Remote",
-      applied: 230,
-      time_left: "10 days left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-    {
-      job_title: "DevOps Engineer",
-      company: "NextGen Technologies",
-      location: "In Office",
-      applied: 345,
-      time_left: "3 weeks left",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const [profileError, setProfileError] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const fetchApplicantProfile = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await axios.get('http://localhost:5000/api/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const profile = res.data;
+      // Check required fields
+      if (!profile.userId?.firstName || !profile.userId?.lastName || !profile.resume || !profile.skills?.length) {
+        setProfileError(true);
+        toast.warning('Your profile is incomplete. Please complete it to explore jobs.');
+      }
+
+    } catch (err) {
+      setProfileError(true);
+      toast.error('Failed to fetch profile. Please try again.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchApplicantProfile();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <p className="text-gray-600 text-lg">Loading...</p>
+      </div>
+    );
+  }
+
+  if (profileError) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 text-center">
+        <div className="bg-white p-8 rounded shadow-lg max-w-md w-full">
+          <h2 className="text-xl font-bold text-red-600 mb-4">Profile Incomplete</h2>
+          <p className="text-gray-700 mb-6">Please complete your profile to continue exploring jobs and opportunities.</p>
+          <button
+            onClick={() => navigate('/applicant/profile')}
+            className="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Complete Profile
+          </button>
+        </div>
+        <ToastContainer position="top-right" autoClose={3000} />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -111,12 +108,13 @@ function ApplicantHome() {
 
         {/* Job Recommendations */}
         <div className="mt-16 mb-2">
-          <JobRecommendations jobs={jobData} />
+          <JobRecommendations />
         </div>
         <JobCategory />
         <ResourcesSection />
       </div>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }

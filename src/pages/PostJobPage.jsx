@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Plus, Trash } from "lucide-react";
 import Navbar from "../components/comman/Navbar";
@@ -32,6 +32,12 @@ const JobPostForm = () => {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        setFormData((prev) => ({ ...prev, deadline: nextWeek.toISOString().slice(0, 16) }));
+    }, []);
 
     const handleArrayChange = (index, value, arrayName) => {
         setFormData((prev) => ({
@@ -128,7 +134,7 @@ const JobPostForm = () => {
                                     required
                                 />
                             </div>
-                            <InputField label="Salary" name="salary" value={formData.salary} onChange={handleChange} />
+                            <InputField label="Salary" name="salary" placeholder={"eg: 80,000 - 120,000 NIR/ 4.5 LPA"} value={formData.salary} onChange={handleChange} />
                         </div>
 
                         {/* Work Type, Job Type, Deadline */}

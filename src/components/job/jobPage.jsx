@@ -24,7 +24,7 @@ const JobPage = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setJobData(response.data.job);
+        setJobData(response.data);
       } catch (err) {
         console.error('Error fetching job:', err);
         setError('Failed to fetch job data');
@@ -45,7 +45,7 @@ const JobPage = () => {
   if (error) {
     return <div className="text-red-500 text-center mt-6">{error}</div>;
   }
-
+  
   if (!jobData) {
     return <div className="text-center mt-6">Loading job details...</div>;
   }

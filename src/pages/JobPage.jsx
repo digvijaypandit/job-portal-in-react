@@ -5,10 +5,16 @@ import Navbar from '../components/comman/Navbar';
 import FilterBar from '../components/job/FilterBar';
 import JobList from '../components/job/jobList';
 import Job from '../components/job/jobPage';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSearchQuery } from '../store/searchSlice';
+import { useLocation } from 'react-router-dom';
 
 const JobPage = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const reduxSearchQuery = useSelector((state) => state.search.query);
+
   const [jobs, setJobs] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [filters, setFilters] = useState({
     tag: '',
@@ -18,11 +24,24 @@ const JobPage = () => {
     postDate: '',
   });
 
+  // Read query param from URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get('search');
+    if (searchParam) {
+      dispatch(setSearchQuery(searchParam));
+    }
+  }, [location.search, dispatch]);
+
+  useEffect(() => {
+    setSearchInput(reduxSearchQuery);
+  }, [reduxSearchQuery]);
+
   const debouncedSetSearchQuery = useCallback(
     debounce((value) => {
-      setSearchQuery(value);
+      dispatch(setSearchQuery(value));
     }, 300),
-    []
+    [dispatch]
   );
 
   const handleSearchChange = (e) => {
@@ -35,14 +54,11 @@ const JobPage = () => {
     const fetchJobs = async () => {
       try {
         const queryParams = new URLSearchParams();
-
-        if (searchQuery) queryParams.append('jobName', searchQuery);
+        if (reduxSearchQuery) queryParams.append('jobName', reduxSearchQuery);
         if (filters.tag) queryParams.append('category', filters.tag);
-
         const response = await axios.get(`http://localhost:5000/api/job/?${queryParams.toString()}`);
         let filteredJobs = response.data.jobs || [];
 
-        // Filter post date (client-side)
         if (filters.postDate) {
           const now = new Date();
           filteredJobs = filteredJobs.filter((job) => {
@@ -55,7 +71,6 @@ const JobPage = () => {
           });
         }
 
-        // Salary sorting (client-side)
         if (filters.salary === 'Low to High') {
           filteredJobs.sort((a, b) => Number(a.salary) - Number(b.salary));
         } else if (filters.salary === 'High to Low') {
@@ -69,9 +84,8 @@ const JobPage = () => {
     };
 
     fetchJobs();
-  }, [searchQuery, filters]);
+  }, [reduxSearchQuery, filters]);
 
-  // Extract dynamic filters from job data
   const locations = [...new Set(jobs.map(job => job.location))];
   const workTypes = [...new Set(jobs.map(job => job.workType))];
   const tags = [

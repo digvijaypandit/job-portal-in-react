@@ -68,7 +68,6 @@ const AnimatedRoutes = () => {
 
         <Route element={<ProtectedRoute allowedRoles={["Applicant"]} />}>
           <Route path="/applicant/home" element={<ApplicantHome />} />
-          <Route path="/applicant/dashboard" element={<ApplicantDashboard />} />
           <Route path="/applicant/saved-jobs" element={<SavedJobs />} />
           <Route path="/applicant/jobs" element={<JobPage />} />
           <Route path="/applicant/applied-jobs" element={<AppliedJobs />} />
@@ -90,7 +89,6 @@ const AnimatedRoutes = () => {
         {/* Protected Employer Routes */}
         <Route element={<ProtectedRoute allowedRoles={["Employer"]} />}>
           <Route path="/employer/home" element={<EmployerHome />} />
-          <Route path="/employer/dashboard" element={<EmployerDashboard />} />
           <Route path="/employer/post-job" element={<PostJobForm />} />
           <Route path="/employer/applications" element={<ViewApplications />} />
           <Route path="/employer/manage-jobs" element={<ManageJobs />} />

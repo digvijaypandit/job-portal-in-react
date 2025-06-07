@@ -18,13 +18,6 @@ const resources = [
     bgColor: 'bg-green-200',
   },
   {
-    name: 'ATS Score Checker',
-    description: 'Optimize your resume for ATS systems',
-    image: '/images/ats.png',
-    link: '/ats-checker',
-    bgColor: 'bg-purple-200',
-  },
-  {
     name: 'Quizzes',
     description: 'Test your knowledge with interactive quizzes and boost your learning',
     image: '/images/quiz.png',
