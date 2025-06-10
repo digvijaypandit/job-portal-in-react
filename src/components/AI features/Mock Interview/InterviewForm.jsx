@@ -16,6 +16,7 @@ const InterviewForm = () => {
         language: '',
         customLanguage: '',
     });
+    const API_URL = import.meta.env.VITE_BASE_URL;
 
     const fieldOptions = {
         Technical: ['Software Engineering', 'Data Science', 'Product Management'],
@@ -103,7 +104,7 @@ const InterviewForm = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/interviews/start', payload);
+            const response = await axios.post(`${API_URL}/interviews/start`, payload);
 
             if (response.status === 200) {
                 const normalizedType = formData.interviewType.toLowerCase();

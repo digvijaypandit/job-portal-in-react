@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BASE_URL;
+
 export const fetchLeaderboard = createAsyncThunk(
   'leaderboard/fetchLeaderboard',
   async ({ type, week, page = 1 }) => {
-    const response = await axios.get(`http://localhost:5000/api/quiz/leaderboard`, {
+    const response = await axios.get(`${API_URL}/quiz/leaderboard`, {
       params: { type, week, page },
     });
     return response.data;

@@ -23,7 +23,7 @@ const AptitudeAnswerInput = () => {
   const dispatch = useDispatch();
   const rawQuestion = useSelector((state) => state.aptitude.question);
   const sessionId = useSelector((state) => state.aptitude.sessionId);
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState(false);
   const [popupData, setPopupData] = useState(null);
@@ -33,7 +33,7 @@ const AptitudeAnswerInput = () => {
 
   const fetchNewQuestion = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/aptitude/question/${sessionId}`);
+      const res = await axios.get(`${API_URL}/aptitude/question/${sessionId}`);
       dispatch(setAptitudeQuestion(res.data.question));
       setSelectedOption("");
     } catch (error) {
@@ -59,7 +59,7 @@ const AptitudeAnswerInput = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/aptitude/answer", {
+      const res = await axios.post(`${API_URL}/aptitude/answer`, {
         sessionId,
         question: rawQuestion,
         userAnswer: selectedOption,

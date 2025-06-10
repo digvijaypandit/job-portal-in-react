@@ -67,7 +67,6 @@ const   JobCard = ({ job, gradient }) => {
 const JobRecommendations = () => {
   const [jobs, setJobs] = useState([]);
   const containerRef = useRef(null);
-
   const gradients = [
     "bg-gradient-to-r from-green-400 to-green-600",
     "bg-gradient-to-r from-yellow-400 to-orange-500",
@@ -76,13 +75,13 @@ const JobRecommendations = () => {
     "bg-gradient-to-r from-purple-400 to-indigo-600",
     "bg-gradient-to-r from-cyan-400 to-teal-500",
   ];
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const token = localStorage.getItem("token")
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/job/recommendations", {
+        const response = await axios.get(`${API_URL}/job/recommendations`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

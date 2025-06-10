@@ -28,11 +28,12 @@ const EmployerHome = () => {
   });
   const [profileError, setProfileError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   const fetchProfileData = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.get('http://localhost:5000/api/profile', {
+      const response = await axios.get(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
@@ -47,7 +48,7 @@ const EmployerHome = () => {
     const token = localStorage.getItem('token');
     const employerId = localStorage.getItem('userId');
     try {
-      const response = await axios.get(`http://localhost:5000/api/job/jobs/employer/${employerId}`, {
+      const response = await axios.get(`${API_URL}/job/jobs/employer/${employerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

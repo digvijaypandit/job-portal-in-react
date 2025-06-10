@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// ---------- Async Actions ----------
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 // Start Global Quiz
 export const startGlobalQuiz = createAsyncThunk(
   'quiz/startGlobalQuiz',
   async (_, thunkAPI) => {
-    const res = await axios.get(`http://localhost:5000/api/quiz/global`);
+    const res = await axios.get(`${API_URL}/quiz/global`);
     return res.data;
   }
 );
@@ -16,7 +16,7 @@ export const startGlobalQuiz = createAsyncThunk(
 export const startSkillQuiz = createAsyncThunk(
   'quiz/startSkillQuiz',
   async ({ userId }, thunkAPI) => {
-    const res = await axios.get(`http://localhost:5000/api/quiz/global?userId=${userId}`);
+    const res = await axios.get(`${API_URL}/quiz/global?userId=${userId}`);
     return res.data;
   }
 );
@@ -25,7 +25,7 @@ export const startSkillQuiz = createAsyncThunk(
 export const fetchQuestions = createAsyncThunk(
   'quiz/fetchQuestions',
   async ({ quizId }, thunkAPI) => {
-    const res = await axios.get(`http://localhost:5000/api/quiz/${quizId}/question`);
+    const res = await axios.get(`${API_URL}/quiz/${quizId}/question`);
     return res.data.questions;
   }
 );
@@ -47,8 +47,8 @@ export const submitQuiz = createAsyncThunk(
     };
 
     const url = isGlobal
-      ? `http://localhost:5000/api/quiz/global/${quizId}/submit`
-      : `http://localhost:5000/api/quiz/${quizId}/submit`;
+      ? `${API_URL}/quiz/global/${quizId}/submit`
+      : `${API_URL}/quiz/${quizId}/submit`;
 
     const res = await axios.post(url, payload);
     return res.data;

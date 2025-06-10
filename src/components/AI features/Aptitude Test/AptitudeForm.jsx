@@ -11,6 +11,7 @@ const AptitudeForm = () => {
   const [level, setLevel] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ const AptitudeForm = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/aptitude/start', {
+      const response = await axios.post(`${API_URL}/aptitude/start`, {
         userId,
         category,
         level,

@@ -10,11 +10,11 @@ const AptitudeHome = () => {
     const [selectedTest, setSelectedTest] = useState(null);
     const [activeId, setActiveId] = useState(null);
     const navigate = useNavigate();
-
+    const API_URL = import.meta.env.VITE_BASE_URL;
     useEffect(() => {
         const fetchTests = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/aptitude/user/${userId}`);
+                const res = await axios.get(`${API_URL}/aptitude/user/${userId}`);
                 setTests(res.data);
             } catch (err) {
                 console.error('Error fetching aptitude tests:', err);
@@ -31,7 +31,7 @@ const AptitudeHome = () => {
         }
 
         try {
-            const res = await axios.get(`http://localhost:5000/api/aptitude/${id}`);
+            const res = await axios.get(`${API_URL}/aptitude/${id}`);
             setSelectedTest(res.data);
             setActiveId(id);
         } catch (err) {

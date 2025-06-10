@@ -22,10 +22,11 @@ const EmployerProfile = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [jobs, setJobs] = useState([]);
+    const API_URL = import.meta.env.VITE_BASE_URL;
 
     const fetchProfileData = async () => {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/profile', {
+        const response = await axios.get(`${API_URL}/profile`, {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
@@ -35,7 +36,7 @@ const EmployerProfile = () => {
         const token = localStorage.getItem('token');
         const employerId = localStorage.getItem('userId');
         try {
-            const response = await axios.get(`http://localhost:5000/api/job/jobs/employer/${employerId}`, {
+            const response = await axios.get(`${API_URL}/job/jobs/employer/${employerId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setJobs(response.data.jobs || []);
@@ -109,7 +110,7 @@ const EmployerProfile = () => {
             };
 
             const method = profile ? axios.patch : axios.post;
-            const url = 'http://localhost:5000/api/profile';
+            const url = `${API_URL}/profile`;
             const response = await method(url, form, config);
 
             setProfile(response.data);
@@ -133,7 +134,7 @@ const EmployerProfile = () => {
 
     return (
         <>
-            <Navbar />
+            {profile && <Navbar />}
             <div className="min-h-screen w-full bg-gradient-to-br from-slate-100 to-slate-300 py-10 px-4 md:px-10">
                 <motion.div
                     className="w-full max-w-6xl bg-white/80 shadow-2xl backdrop-blur-md rounded-2xl p-10 border border-slate-200 mx-auto"

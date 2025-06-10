@@ -23,11 +23,12 @@ const AppliedJobs = () => {
   const [sortOrder, setSortOrder] = useState('newest');
   const [selectedJob, setSelectedJob] = useState(null);
   const token = localStorage.getItem("token");
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/application/user/applied', {
+        const res = await axios.get(`${API_URL}/application/user/applied`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -55,7 +56,7 @@ const AppliedJobs = () => {
 
   const handleDeleteJob = async (jobId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/application/jobs/${jobId}/apply`, {
+      await axios.delete(`${API_URL}/application/jobs/${jobId}/apply`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

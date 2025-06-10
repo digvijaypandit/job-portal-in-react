@@ -23,7 +23,6 @@ async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
     const image = await createImage(imageSrc);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
     const maxSize = Math.max(image.width, image.height);
     const safeArea = 2 * ((maxSize / 2) * Math.sqrt(2));
 
@@ -60,9 +59,11 @@ async function getCroppedImg(imageSrc, pixelCrop, rotation = 0) {
     });
 }
 
+const API_URL = import.meta.env.VITE_BASE_URL;
+
 const fetchProfileData = async () => {
     const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:5000/api/profile', {
+    const response = await axios.get(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -363,7 +364,7 @@ const Profile = () => {
 
     return (
         <>
-            <Navbar />
+            {profile && <Navbar />}
             <div className="bg-gradient-to-br from-blue-50 to-yellow-50 min-h-screen">
                 <div className="max-w-5xl mx-auto py-10 px-6">
                     <div className="bg-white shadow-xl rounded-xl p-8">

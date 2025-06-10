@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { FaShoppingBag, FaPenNib, FaUserShield, FaChartBar, FaLaptopCode, FaUniversity, FaProjectDiagram, FaBullhorn, FaLock, FaDatabase, FaNetworkWired, FaUserTie, FaFileMedical, FaHardHat, FaWrench, FaChalkboardTeacher, FaFilm, FaHotel, FaTruck, FaHome, FaLeaf } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const jobCategories = [
   { title: "Retail & Product", jobs: 3, icon: <FaShoppingBag /> },
@@ -26,6 +27,7 @@ const jobCategories = [
 ];
 
 const JobCategories = () => {
+  const navigate = useNavigate()
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -83,6 +85,7 @@ const JobCategories = () => {
           <div className="grid grid-rows-2 grid-flow-col gap-4">
             {jobCategories.map((category, index) => (
               <div
+                onClick={() => navigate("/applicant/jobs")}
                 key={index}
                 className="bg-white border cursor-pointer rounded-lg p-6 shadow-md flex flex-col items-center min-w-[275px] space-y-2"
                 style={{ scrollSnapAlign: "start" }}

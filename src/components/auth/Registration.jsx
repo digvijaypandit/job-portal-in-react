@@ -48,7 +48,7 @@ const RegistrationPage = () => {
       // Common data with only role as a string, no endpoint here
       const commonData = {
         ...formData,
-        role: isEmployer ? "Employer" : "Employee", // Send the role as a string
+        role: isEmployer ? "Employer" : "Applicant", // Send the role as a string
       };
 
       const employeeExtras = {

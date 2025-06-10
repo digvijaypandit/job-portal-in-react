@@ -1,20 +1,25 @@
 import { motion } from "framer-motion";
 
-// Company Logos (Scrolling Strip)
-const companies = [
-  { logo: "https://cdn.logojoy.com/wp-content/uploads/20230801145635/Google_logo_2013-2015-600x206.png" },
-  { logo: "https://upload.wikimedia.org/wikipedia/commons/0/06/Amazon_2024.svg" },
-  { logo: "https://nforceit.com.au/wp-content/uploads/2023/09/nforceit-partner-microsoft-logo.png" },
-  { logo: "https://be.tricentis.com/media-assets/2024/04/TCS_NewLogo_Final_CMYK_Black.png" },
-  { logo: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Meta-Logo.png" },
-  { logo: "https://upload.wikimedia.org/wikipedia/commons/e/ea/Netflix_Logomark.png" },
-  { logo: "https://images.ctfassets.net/drk57q8lctrm/4QgGDTtQYDx6oDaW3aU7KS/34163f3bef6d82fd354a7455d07102eb/flipkart-logo.webp" },
-  { logo: "https://cdn.iconscout.com/icon/free/png-256/free-samsung-logo-icon-download-in-svg-png-gif-file-formats--phone-technology-brands-and-logos-pack-icons-2673897.png?f=webp" },
-  { logo: "https://www.logo.wine/a/logo/Tech_Mahindra/Tech_Mahindra-Logo.wine.svg" },
+// Job Titles
+const jobs = [
+  { title: "Software Engineer" },
+  { title: "Data Scientist" },
+  { title: "Product Manager" },
+  { title: "DevOps Engineer" },
+  { title: "UX Designer" },
+  { title: "AI Researcher" },
+  { title: "Marketing Analyst" },
+  { title: "Cloud Architect" },
+  { title: "Security Specialist" },
+  { title: "Business Analyst" },
+  { title: "Mobile App Developer" },
+  { title: "QA Engineer" },
+  { title: "IT Support Specialist" },
+  { title: "Machine Learning Engineer" },
+  { title: "Full Stack Developer" },
 ];
 
-// Duplicate logos for seamless looping
-const repeatedCompanies = [...companies, ...companies];
+const repeatedJobs = [...jobs, ...jobs];
 
 const Jobs = () => {
   return (
@@ -32,25 +37,24 @@ const Jobs = () => {
         Explore top job opportunities at leading companies
       </p>
 
-      {/* Scrolling Logos */}
+      {/* Scrolling Job Titles */}
       <div className="overflow-hidden mt-10 relative">
         <motion.div
           className="flex gap-10 w-max"
           initial={{ x: "0%" }}
-          animate={{ x: "-50%" }}
+          animate={{ x: "-100%" }} // ⬅️ scrolls the entire width
           transition={{
             repeat: Infinity,
-            duration: 10,
+            duration: 30, // ⬅️ longer time = slower scroll
             ease: "linear",
           }}
         >
-          {repeatedCompanies.map((company, index) => (
-            <div key={index} className="flex items-center">
-              <img
-                src={company.logo}
-                alt={`Company ${index}`}
-                className="w-24 h-24 object-contain"
-              />
+          {repeatedJobs.map((job, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center w-48 h-24 text-black text-lg font-medium"
+            >
+              {job.title}
             </div>
           ))}
         </motion.div>

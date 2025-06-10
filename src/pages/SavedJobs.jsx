@@ -6,7 +6,7 @@ import Footer from "../components/comman/footer";
 import { FaSearch, FaSort, FaTimes, FaTrash, FaMapMarkerAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:5000/api/savedJob";
+const API_URL =`${import.meta.env.VITE_BASE_URL}/savedJob`;
 
 const SavedJobs = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const SavedJobs = () => {
   const [sortOrder, setSortOrder] = useState("newest");
   const [selectedJob, setSelectedJob] = useState(null);
   const token = localStorage.getItem("token");
-
+  const apiUrl = import.meta.env.VITE_BASE_URL
   useEffect(() => {
     const fetchSavedJobs = async () => {
       try {

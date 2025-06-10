@@ -5,7 +5,7 @@ import Navbar from '../components/comman/Navbar';
 
 const userId = localStorage.getItem('userId');
 
-// ... keep imports the same
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 const MockInterviewHome = () => {
     const [interviews, setInterviews] = useState([]);
@@ -16,7 +16,7 @@ const MockInterviewHome = () => {
     useEffect(() => {
         const fetchInterviews = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/interviews/user/${userId}`);
+                const res = await axios.get(`${API_URL}/interviews/user/${userId}`);
                 setInterviews(res.data);
             } catch (err) {
                 console.error('Error fetching interviews:', err);
@@ -33,7 +33,7 @@ const MockInterviewHome = () => {
         }
 
         try {
-            const res = await axios.get(`http://localhost:5000/api/interviews/${id}`);
+            const res = await axios.get(`${API_URL}/interviews/${id}`);
             setSelectedInterview(res.data);
             setActiveId(id);
         } catch (err) {

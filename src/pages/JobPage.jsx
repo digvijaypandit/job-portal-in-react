@@ -23,6 +23,7 @@ const JobPage = () => {
     salary: '',
     postDate: '',
   });
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   // Read query param from URL
   useEffect(() => {
@@ -56,7 +57,7 @@ const JobPage = () => {
         const queryParams = new URLSearchParams();
         if (reduxSearchQuery) queryParams.append('jobName', reduxSearchQuery);
         if (filters.tag) queryParams.append('category', filters.tag);
-        const response = await axios.get(`http://localhost:5000/api/job/?${queryParams.toString()}`);
+        const response = await axios.get(`${API_URL}/job/?${queryParams.toString()}`);
         let filteredJobs = response.data.jobs || [];
 
         if (filters.postDate) {

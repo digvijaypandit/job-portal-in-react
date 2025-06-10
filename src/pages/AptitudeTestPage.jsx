@@ -17,7 +17,7 @@ const AptitudeTestPage = () => {
         totalQuestions: 0,
         suggestions: "",
     });
-
+    const API_URL = import.meta.env.VITE_BASE_URL;
     const [warningVisible, setWarningVisible] = useState(false);
     const exitAttemptCount = useRef(0);
 
@@ -35,7 +35,7 @@ const AptitudeTestPage = () => {
     const submitTest = async () => {
         if (!sessionId) return;
         try {
-            const res = await axios.post("http://localhost:5000/api/aptitude/finish", {
+            const res = await axios.post(`${API_URL}/aptitude/finish`, {
                 sessionId,
             });
 

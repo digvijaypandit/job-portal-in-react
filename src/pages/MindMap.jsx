@@ -20,6 +20,8 @@ const nodeWidth = 200;
 const nodeHeight = 80;
 const colors = ['#fde68a', '#a7f3d0', '#bfdbfe', '#fca5a5', '#c4b5fd'];
 
+const API_URL = import.meta.env.VITE_BASE_URL;
+
 const getLayoutedElements = (nodes, edges, direction = "LR") => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -130,7 +132,7 @@ export default function Roadmap() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/roadmap/generate", {
+      const res = await fetch(`${API_URL}/roadmap/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nodeLabel: inputLabel }),

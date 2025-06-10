@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function ApplicantHome() {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   const [profileError, setProfileError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ function ApplicantHome() {
   const fetchApplicantProfile = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/profile', {
+      const res = await axios.get(`${API_URL}/profile`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

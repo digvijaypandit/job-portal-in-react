@@ -21,7 +21,7 @@ const InterviewPage = () => {
     averageScore: 0,
     suggestions: "",
   });
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const [warningVisible, setWarningVisible] = useState(false);
   const exitAttemptCount = useRef(0); // Track attempts to exit fullscreen or change tab
 
@@ -45,7 +45,7 @@ const InterviewPage = () => {
       return;
     }
     try {
-      const res = await axios.post("http://localhost:5000/api/interviews/finish", { sessionId });
+      const res = await axios.post(`${API_URL}/interviews/finish`, { sessionId });
 
       exitFullscreen();
       dispatch(resetInterview());

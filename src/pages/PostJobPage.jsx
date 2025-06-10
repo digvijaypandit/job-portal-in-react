@@ -6,6 +6,8 @@ import Footer from "../components/comman/footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const API_URL = import.meta.env.VITE_BASE_URL;
+
 const JobPostForm = () => {
     const initialState = {
         jobName: "",
@@ -88,7 +90,7 @@ const JobPostForm = () => {
         }
 
         try {
-            const res = await axios.post("http://localhost:5000/api/job/create", form, {
+            const res = await axios.post(`${API_URL}/job/create`, form, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: `Bearer ${token}`,

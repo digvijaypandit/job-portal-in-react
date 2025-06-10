@@ -25,7 +25,7 @@ const Features = () => {
         {features.map((feature, index) => (
           <motion.div
             key={index}
-            className="p-8 cursor-pointer rounded-xl w-72 shadow-lg flex flex-col items-center border border-gray-700 hover:shadow-2xl"
+            className="p-8 rounded-xl w-72 shadow-lg flex flex-col items-center border border-gray-700 hover:shadow-2xl"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}

@@ -15,7 +15,7 @@ const MentorshipPage = () => {
   const [chatId, setChatId] = useState(null);
   const messagesEndRef = useRef(null);
 
-  const API_BASE = "http://localhost:5000/api";
+  const API_BASE = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });

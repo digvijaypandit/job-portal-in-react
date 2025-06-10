@@ -25,20 +25,20 @@ const initialFormData = {
 const EditJobForm = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState(initialFormData);
+    const API_URL = import.meta.env.VITE_BASE_URL;
 
     useEffect(() => {
         const fetchJob = async () => {
             const token = localStorage.getItem("token");
             try {
-                const res = await axios.get(`http://localhost:5000/api/job/jobs/${id}`, {
+                const res = await axios.get(`${API_URL}/job/jobs/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
 
-                const job = res.data.job;
+                const job = res?.data;
 
                 // Helper to safely parse stringified arrays
                 const safeParse = (value) => {
@@ -53,19 +53,21 @@ const EditJobForm = () => {
                 setFormData({
                     ...initialFormData,
                     ...job,
-                    keyResponsibilities: safeParse(job.keyResponsibilities?.[0] || ""),
-                    skills: safeParse(job.skills?.[0] || ""),
-                    tags: safeParse(job.tags?.[0] || ""),
+                    keyResponsibilities: safeParse(job.keyResponsibilities?.[0] ?? ""),
+                    skills: safeParse(job.skills?.[0] ?? ""),
+                    tags: safeParse(job.tags?.[0] ?? ""),
                     deadline: job.deadline ? new Date(job.deadline).toISOString().slice(0, 16) : "",
                 });
 
             } catch (err) {
                 toast.error("Failed to fetch job details");
-                console.error(err);
+                console.error("Error fetching job:", err);
             }
         };
 
-        fetchJob();
+        if (id) {
+            fetchJob();
+        }
     }, [id]);
 
     const handleChange = (e) => {
@@ -104,7 +106,7 @@ const EditJobForm = () => {
                 companyLogo: undefined, // Not updating logo
             };
 
-            await axios.patch(`http://localhost:5000/api/job/${id}`, updatedData, {
+            await axios.patch(`${API_URL}/job/${id}`, updatedData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -120,54 +122,54 @@ const EditJobForm = () => {
 
     return (
         <>
-        <Navbar />
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-            <h2 className="text-2xl font-semibold mb-4">Edit Job</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <Input label="Job Title" name="jobName" value={formData.jobName} onChange={handleChange} />
-                <Input label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} />
-                <Input label="Category" name="jobCategory" value={formData.jobCategory} onChange={handleChange} />
-                <Input label="Salary" name="salary" value={formData.salary} onChange={handleChange} />
-                <Input label="Location" name="location" value={formData.location} onChange={handleChange} />
+            <Navbar />
+            <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+                <h2 className="text-2xl font-semibold mb-4">Edit Job</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input label="Job Title" name="jobName" value={formData.jobName} onChange={handleChange} />
+                    <Input label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} />
+                    <Input label="Category" name="jobCategory" value={formData.jobCategory} onChange={handleChange} />
+                    <Input label="Salary" name="salary" value={formData.salary} onChange={handleChange} />
+                    <Input label="Location" name="location" value={formData.location} onChange={handleChange} />
 
-                <TextArea label="Job Description" name="jobDescription" value={formData.jobDescription} onChange={handleChange} />
-                <TextArea label="Work Details" name="workDetail" value={formData.workDetail} onChange={handleChange} />
+                    <TextArea label="Job Description" name="jobDescription" value={formData.jobDescription} onChange={handleChange} />
+                    <TextArea label="Work Details" name="workDetail" value={formData.workDetail} onChange={handleChange} />
 
-                <ArrayInput label="Responsibilities" arrayName="keyResponsibilities" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
-                <ArrayInput label="Skills" arrayName="skills" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
-                <ArrayInput label="Tags" arrayName="tags" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
+                    <ArrayInput label="Responsibilities" arrayName="keyResponsibilities" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
+                    <ArrayInput label="Skills" arrayName="skills" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
+                    <ArrayInput label="Tags" arrayName="tags" data={formData} onChange={handleArrayChange} onAdd={addField} onRemove={removeField} />
 
-                <div>
-                    <label className="block mb-1">Work Type</label>
-                    <select
-                        name="workType"
-                        className="w-full p-2 border rounded"
-                        value={formData.workType}
-                        onChange={handleChange}
-                    >
-                        <option value="Office">Office</option>
-                        <option value="Remote">Remote</option>
-                        <option value="Hybrid">Hybrid</option>
-                    </select>
-                </div>
+                    <div>
+                        <label className="block mb-1">Work Type</label>
+                        <select
+                            name="workType"
+                            className="w-full p-2 border rounded"
+                            value={formData.workType}
+                            onChange={handleChange}
+                        >
+                            <option value="Office">Office</option>
+                            <option value="Remote">Remote</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
 
-                <div>
-                    <label className="block mb-1">Deadline</label>
-                    <input
-                        type="datetime-local"
-                        name="deadline"
-                        className="w-full p-2 border rounded"
-                        value={formData.deadline}
-                        onChange={handleChange}
-                    />
-                </div>
+                    <div>
+                        <label className="block mb-1">Deadline</label>
+                        <input
+                            type="datetime-local"
+                            name="deadline"
+                            className="w-full p-2 border rounded"
+                            value={formData.deadline}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-                    Update Job
-                </button>
-            </form>
-        </div>
-        <Footer />
+                    <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                        Update Job
+                    </button>
+                </form>
+            </div>
+            <Footer />
         </>
     );
 };

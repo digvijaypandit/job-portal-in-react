@@ -1,6 +1,5 @@
 import React from 'react'
 import JobCategories from '../components/Landing/JobCategories'
-import Roadmap from '../components/Landing/Roadmap'
 import Features from '../components/Landing/Features'
 import Footer from '../components/comman/footer'
 import Jobs from '../components/Landing/Jobs'
@@ -14,7 +13,6 @@ function LandingPage() {
             <Jobs />
             <JobCategories />
             <Features />
-            {/* <Roadmap /> */}
             <AboutUs />
             <Footer />
         </div>

@@ -17,7 +17,7 @@ const JobHeader = ({ job }) => {
     hasApplied: false,
   });
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const JobHeader = ({ job }) => {
     const fetchJobStatus = async () => {
       try {
         const [savedRes, appliedRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/savedJob/', {
+          axios.get(`${API_URL}/savedJob/`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get('http://localhost:5000/api/application/user/applied', {
+          axios.get(`${API_URL}/application/user/applied`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -69,8 +69,8 @@ const JobHeader = ({ job }) => {
     }
 
     const url = jobStatus.isSaved
-      ? 'http://localhost:5000/api/savedJob/remove'
-      : 'http://localhost:5000/api/savedJob/save';
+      ? `${API_URL}/savedJob/remove`
+      : `${API_URL}/savedJob/save`;
 
     try {
       await axios.post(url, { jobId: job._id }, {

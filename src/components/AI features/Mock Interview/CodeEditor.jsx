@@ -14,10 +14,11 @@ const CodeEditor = () => {
   const sessionId = useSelector((state) => state.interview.sessionId);
   const question = useSelector((state) => state.interview.question);
   const dispatch = useDispatch();
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   const fetchNewQuestion = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/interviews/question/${sessionId}`);
+      const res = await axios.get(`${API_URL}/interviews/question/${sessionId}`);
       dispatch(setQuestion(res.data.question));
     } catch (error) {
       console.error("Error fetching question:", error);
@@ -44,7 +45,7 @@ const CodeEditor = () => {
       };
   
       const response = await axios.post(
-        "http://localhost:5000/api/interviews/answer",
+        `${API_URL}/interviews/answer`,
         payload,
         {
           headers: {

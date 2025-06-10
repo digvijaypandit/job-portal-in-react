@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../comman/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-white text-black relative select-none">
       {/* Navbar */}
@@ -57,7 +59,7 @@ function Home() {
                 className="w-full bg-transparent focus:outline-none text-black"
               />
             </div>
-            <button className="bg-white bg-opacity-30 hover:bg-opacity-40 hover:border-gray-400 border border-gray-300 text-gray-700 cursor-pointer p-4 rounded-full transition-all duration-200 shadow-lg backdrop-blur-md hover:scale-95 active:scale-90 focus:ring focus:ring-gray-300">
+            <button onClick={() => navigate("/applicant/jobs")} className="bg-white bg-opacity-30 hover:bg-opacity-40 hover:border-gray-400 border border-gray-300 text-gray-700 cursor-pointer p-4 rounded-full transition-all duration-200 shadow-lg backdrop-blur-md hover:scale-95 active:scale-90 focus:ring focus:ring-gray-300">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search">
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
               </svg>

@@ -14,11 +14,12 @@ const ManageJobs = () => {
     const navigate = useNavigate();
     const employerId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
+    const API_URL = import.meta.env.VITE_BASE_URL;
 
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/job/jobs/employer/${employerId}`, {
+                const response = await axios.get(`${API_URL}/job/jobs/employer/${employerId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -36,7 +37,7 @@ const ManageJobs = () => {
 
     const deleteJob = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/job/${id}`, {
+            await axios.delete(`${API_URL}/job/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

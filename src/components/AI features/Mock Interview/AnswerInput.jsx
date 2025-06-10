@@ -12,7 +12,7 @@ const AnswerInput = () => {
   const [loading, setLoading] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const sessionId = useSelector((state) => state.interview.sessionId);
   const question = useSelector((state) => state.interview.question);
 
@@ -28,7 +28,7 @@ const AnswerInput = () => {
 
   const fetchNewQuestion = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/interviews/question/${sessionId}`);
+      const res = await axios.get(`${API_URL}/interviews/question/${sessionId}`);
       dispatch(setQuestion(res.data.question));
     } catch (error) {
       console.error("Error fetching question:", error);
@@ -47,7 +47,7 @@ const AnswerInput = () => {
     }
     
     try {
-      const response = await axios.post("http://localhost:5000/api/interviews/answer", {
+      const response = await axios.post(`${API_URL}/interviews/answer`, {
         sessionId,
         question,
         userAnswer: answer,

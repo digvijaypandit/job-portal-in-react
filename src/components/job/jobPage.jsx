@@ -12,6 +12,7 @@ const JobPage = () => {
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
   const jobId = searchParams.get('jobId');
+  const API_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     if (!jobId) return;
@@ -19,7 +20,7 @@ const JobPage = () => {
     const fetchJob = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:5000/api/job/jobs/${jobId}`, {
+        const response = await axios.get(`${API_URL}/job/jobs/${jobId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

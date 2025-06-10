@@ -11,7 +11,7 @@ const JobApplyModal = ({ isOpen, onRequestClose, jobId }) => {
   const [resume, setResume] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const token = localStorage.getItem("token");
-
+  const API_URL = import.meta.env.VITE_BASE_URL;
   const handleFileChange = (e) => {
     setResume(e.target.files[0]);
   };
@@ -41,7 +41,7 @@ const JobApplyModal = ({ isOpen, onRequestClose, jobId }) => {
     try {
       setIsSubmitting(true);
       await axios.post(
-        `http://localhost:5000/api/application/jobs/${jobId}/apply`,
+        `${API_URL}/application/jobs/${jobId}/apply`,
         formData,
         {
           headers: {
