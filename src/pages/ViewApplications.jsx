@@ -226,7 +226,7 @@ const ViewApplications = () => {
                         </ul>
                       )}
                       <a
-                        href={`http://localhost:5000${app.resume.replace(/\\/g, '/')}`}
+                        href={`${import.meta.env.VITE_BASE_IMAGE_URL}${app.resume.replace(/\\/g, '/')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 underline"

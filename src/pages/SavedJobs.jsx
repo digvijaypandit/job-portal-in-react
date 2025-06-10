@@ -33,7 +33,7 @@ const SavedJobs = () => {
   const removeJob = async (jobId) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/savedJob/remove",
+        `${apiUrl}/savedJob/remove`,
         { jobId },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -101,7 +101,7 @@ const SavedJobs = () => {
                 >
                   <div className="flex items-center space-x-4">
                     <img
-                      src={`http://localhost:5000/${job.companyLogo?.replace(/^\/+/, '')}`}
+                      src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${job.companyLogo?.replace(/^\/+/, '')}`}
                       alt={`Logo of ${job.companyName}`}
                       className="w-12 h-12 object-contain"
                     />

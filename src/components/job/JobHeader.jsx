@@ -120,7 +120,7 @@ const JobHeader = ({ job }) => {
       <div className="flex flex-col md:flex-row justify-between gap-6">
         <div className="flex gap-4">
           <img
-            src={`http://localhost:5000/${job.companyLogo?.replace(/^\/+/, '')}`}
+            src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${job.companyLogo?.replace(/^\/+/, '')}`}
             alt="Company Logo"
             className="w-16 h-16 rounded-xl object-cover"
           />

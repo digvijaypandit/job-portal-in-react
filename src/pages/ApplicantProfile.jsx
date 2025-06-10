@@ -379,7 +379,7 @@ const Profile = () => {
                                                 croppedPhotoURL
                                                     ? croppedPhotoURL
                                                     : profile.photo
-                                                        ? `http://localhost:5000/${profile.photo.replace(/^\/+/, '')}`
+                                                        ? `${import.meta.env.VITE_BASE_IMAGE_URL}/${profile.photo.replace(/^\/+/, '')}`
                                                         : 'https://via.placeholder.com/96?text=No+Photo'
                                             }
                                             alt="Profile"
@@ -456,7 +456,7 @@ const Profile = () => {
                                 {profile.resume && (
                                     <Section title="Resume">
                                         <a
-                                            href={`http://localhost:5000/${profile.resume.replace(/^\/+/, '')}`}
+                                            href={`${import.meta.env.VITE_BASE_IMAGE_URL}/${profile.resume.replace(/^\/+/, '')}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-blue-600 underline hover:text-blue-800 transition"

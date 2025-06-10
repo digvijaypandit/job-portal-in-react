@@ -33,7 +33,7 @@ const JobCard = ({ job, isActive, onClick }) => {
         >
             <div className="flex gap-4 items-start">
                 <img
-                    src={`http://localhost:5000/${job.companyLogo?.replace(/^\/+/, '')}`}
+                    src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${job.companyLogo?.replace(/^\/+/, '')}`}
                     alt="logo"
                     className="w-10 h-10 rounded object-contain"
                 />

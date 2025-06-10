@@ -203,7 +203,7 @@ const EmployerProfile = () => {
                             <div className="flex flex-col sm:flex-row items-center gap-6 border-b pb-6">
                                 {profile?.photo && (
                                     <img
-                                        src={`http://localhost:5000/${profile.photo?.replace(/^\/+/, '')}`}
+                                        src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${profile.photo?.replace(/^\/+/, '')}`}
                                         alt="Company Logo"
                                         className="w-24 h-24 rounded-full border shadow-md object-cover"
                                     />
@@ -263,7 +263,7 @@ const EmployerProfile = () => {
                                                 <div className="flex items-center gap-4 mb-3">
                                                     {job.companyLogo && (
                                                         <img
-                                                            src={`http://localhost:5000${job.companyLogo}`}
+                                                            src={`${import.meta.env.VITE_BASE_IMAGE_URL}${job.companyLogo}`}
                                                             alt={job.jobName}
                                                             className="w-10 h-10 object-contain"
                                                         />

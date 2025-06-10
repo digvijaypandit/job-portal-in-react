@@ -55,7 +55,7 @@ const Leaderboard = ({ type = 'BACKGROUND' }) => {
                   } overflow-hidden`}
                 >
                   <img
-                    src={`http://localhost:5000/${user.photo?.replace(/^\/+/, '')}`}
+                    src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${user.photo?.replace(/^\/+/, '')}`}
                     alt={user.userId}
                     className="w-full h-full object-cover"
                     onError={(e) => {
@@ -87,7 +87,7 @@ const Leaderboard = ({ type = 'BACKGROUND' }) => {
                   <div className="flex items-center gap-3">
                     <span className="text-lg w-6">{rank}</span>
                     <img
-                      src={`http://localhost:5000/${user.photo.replace(/^\/+/, '')}`}
+                      src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${user.photo.replace(/^\/+/, '')}`}
                       alt={user.userId}
                       className="w-8 h-8 rounded-full object-cover"
                       onError={(e) => {

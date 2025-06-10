@@ -38,7 +38,7 @@ const AppliedJobs = () => {
             id: item.job._id,
             title: item.job.jobName,
             company: item.job.companyName,
-            logo: `http://localhost:5000${item.job.companyLogo}`,
+            logo: `${import.meta.env.VITE_BASE_IMAGE_URL}${item.job.companyLogo}`,
             appliedDate: item.applicationDate.split('T')[0],
             status: item.status,
             description: `You applied for the ${item.job.jobName} role at ${item.job.companyName}. Status: ${item.status}.`,

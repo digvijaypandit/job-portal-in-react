@@ -104,7 +104,7 @@ const ManageJobs = () => {
                                             >
                                                 <td className="p-4">{job.jobName}</td>
                                                 <td className="p-4 flex items-center gap-2">
-                                                    <img src={`http://localhost:5000${job.companyLogo}`} alt="logo" className="w-8 h-8 rounded-full" />
+                                                    <img src={`${import.meta.env.VITE_BASE_IMAGE_URL}${job.companyLogo}`} alt="logo" className="w-8 h-8 rounded-full" />
                                                     {job.companyName}
                                                 </td>
                                                 <td className="p-4">{job.location}</td>

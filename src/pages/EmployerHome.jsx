@@ -132,7 +132,7 @@ const EmployerHome = () => {
           <div className="bg-gradient-to-r from-indigo-50 to-white rounded-xl p-6 md:flex md:items-center md:justify-between mb-10">
             <div className="flex items-center gap-4">
               <img
-                src={`http://localhost:5000/${employerData.photo?.replace(/^\/+/, '')}`}
+                src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${employerData.photo?.replace(/^\/+/, '')}`}
                 alt="Profile"
                 className="w-16 h-16 rounded-full object-cover shadow-md"
               />

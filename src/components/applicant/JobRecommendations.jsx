@@ -28,7 +28,7 @@ const   JobCard = ({ job, gradient }) => {
     >
       <div className={`absolute top-0 left-0 w-full h-20 rounded-t-2xl z-0 ${gradient}`} />
       <div className="absolute top-3 right-3 bg-white p-1 rounded-lg z-10 transition-transform duration-300 group-hover:scale-110">
-        <img src={`http://localhost:5000/${job.companyLogo?.replace(/^\/+/, '')}`} alt={job.companyName} className="w-10 h-10 object-contain" />
+        <img src={`${import.meta.env.VITE_BASE_IMAGE_URL}/${job.companyLogo?.replace(/^\/+/, '')}`} alt={job.companyName} className="w-10 h-10 object-contain" />
       </div>
       <div className="absolute top-3 left-3">
         <h3 className="text-md font-semibold transition-colors duration-300 max-w-44">
