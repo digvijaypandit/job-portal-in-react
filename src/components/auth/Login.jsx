@@ -133,7 +133,7 @@ const LoginPage = () => {
         {/* Right: Illustration */}
         <div className="hidden md:flex w-1/2 items-center justify-center p-6 bg-gray-100">
           <img
-            src="http://konnect.aisect.org/Content/Images/Capture.png"
+            src="/images/login.png"
             alt="Illustration"
             className="max-w-xs md:max-w-md"
           />
