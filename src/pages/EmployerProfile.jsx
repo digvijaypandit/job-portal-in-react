@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
     FaLinkedin, FaGlobe, FaEnvelope, FaPhone, FaMapMarkerAlt
 } from "react-icons/fa";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import Navbar from "../components/comman/Navbar";
 
 const EmployerProfile = () => {

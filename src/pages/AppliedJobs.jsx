@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/comman/Navbar';
-import Footer from '../components/comman/footer';
+import Footer from '../components/comman/Footer';
 import { FaSearch, FaFilter, FaSort, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';

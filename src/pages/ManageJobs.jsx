@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/comman/Navbar";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import JobPostForm from "./PostJobPage";
 
 const ManageJobs = () => {

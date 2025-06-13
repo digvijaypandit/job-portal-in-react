@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import Navbar from "../components/comman/Navbar";
 
 // Initial structure for safe fallback

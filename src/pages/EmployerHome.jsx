@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FaPlus, FaClipboardList, FaUsers } from "react-icons/fa";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import Navbar from "../components/comman/Navbar";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";

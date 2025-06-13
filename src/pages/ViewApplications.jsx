@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Footer from '../components/comman/footer';
+import Footer from '../components/comman/Footer';
 import Navbar from '../components/comman/Navbar';
 
 const ViewApplications = () => {

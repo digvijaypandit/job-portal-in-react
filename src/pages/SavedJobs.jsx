@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/comman/Navbar";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import { FaSearch, FaSort, FaTimes, FaTrash, FaMapMarkerAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

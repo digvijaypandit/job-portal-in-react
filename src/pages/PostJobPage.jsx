@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Plus, Trash } from "lucide-react";
 import Navbar from "../components/comman/Navbar";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

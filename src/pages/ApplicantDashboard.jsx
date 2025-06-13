@@ -2,7 +2,7 @@ import React from "react";
 import { FaBriefcase, FaBookmark, FaBell, FaChartBar, FaUpload, FaUserEdit, FaCalendarAlt, FaFileAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Navbar from "../components/comman/Navbar";
-import Footer from "../components/comman/footer";
+import Footer from "../components/comman/Footer";
 
 const ApplicantDashboard = () => {
   return (
