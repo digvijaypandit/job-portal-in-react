@@ -35,14 +35,6 @@ const JobPage = () => {
     fetchJob();
   }, [jobId]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!jobId) setError('Job ID not found in URL');
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [jobId]);
-
   if (error) {
     return <div className="text-red-500 text-center mt-6">{error}</div>;
   }
