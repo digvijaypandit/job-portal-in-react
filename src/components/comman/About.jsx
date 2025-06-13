@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Team from "./Team";
 import Navbar from "./Navbar";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const About = () => {
   const cards = [
