@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Navbar from "../components/comman/Navbar";
-import Footer from "../components/comman/footer";
-import JobCategories from "../components/Landing/JobCategories";
+import Navbar from "../components/comman/Navbar.jsx";
+import Footer from "../components/comman/Footer.jsx";
+import JobCategories from "../components/Landing/JobCategories.jsx";
 import { FaSearch, FaFilter, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Typewriter } from "react-simple-typewriter";
 import { useNavigate } from "react-router-dom";
